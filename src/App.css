@@ -1,0 +1,9 @@
+@import '~antd/dist/antd.dark.css';
+
+.App {
+  text-align: center;
+}
+
+body {
+  background-color: #141414;
+}
