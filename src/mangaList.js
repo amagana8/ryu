@@ -1,83 +1,35 @@
-import React, {useState, useEffect} from 'react';
 import SideBar from './components/SideBar';
-import './App.css';
-import { Layout, Table } from 'antd';
-import axios from 'axios';
+import { Layout, Tabs } from 'antd';
+import { MangaTable } from './mangaTable';
 
 const {Content, Sider } = Layout;
+const { TabPane } = Tabs;
 
 const MangaList = () => {
-    const [state, setstate] = useState([]);
-    const [loading, setloading] = useState(true);
-    useEffect(() => {
-        getData();
-    }, []);
-
-    const getData = async () => {
-        await axios({
-            url: 'https://graphql.anilist.co',
-            method: 'post',
-            data: {query: `
-                    query {
-                        MediaListCollection(userName: "PaleteroMan", type: MANGA) {
-                            lists {
-                                name
-                                entries {
-                                    media {
-                                        title {
-                                            romaji
-                                        }
-                                        chapters
-                                    }
-                                }
-                            }
-                        }
-                    }    
-                `
-            }
-        }).then(res => {
-				setloading(false);
-				setstate(
-					res.data.data.MediaListCollection.lists[2].entries.map(row => ({
-                        Title: row.media.title.romaji,
-                        Chapters:row.media.chapters
-                    }))
-                );
-            }
-		);
-    };
-
-    const columns = [
-        {
-            title: "Title",
-            dataIndex: "Title",
-            width: 150
-        },
-        {
-            title: "Chapters",
-            dataIndex: "Chapters",
-            width: 150
-        }
-    ];
-
     return (
         <div className="MangaList">
           <Layout>
             <Sider>
-                <SideBar />
+                <SideBar item='2'/>
             </Sider>
             <Content>
-				<div>
-					{loading ? (
-						"Loading"
-					) : (
-						<Table
-						columns={columns}
-						dataSource={state}
-						pagination={{ pageSize: 50 }}
-						/>
-					)}
-              	</div>
+              <Tabs type="card">
+				        <TabPane tab="Reading" key="1">
+                  <MangaTable status='CURRENT'/>
+                </TabPane>
+                <TabPane tab="Completed" key="2">
+                  <MangaTable status='COMPLETED'/>
+                </TabPane>
+                <TabPane tab="Paused" key="3">
+                  <MangaTable status='PAUSED'/>
+                </TabPane>
+                <TabPane tab="Dropped" key="4">
+                  <MangaTable status='DROPPED'/>
+                </TabPane>
+                <TabPane tab="Planning" key="5">
+                  <MangaTable status='PLANNING'/>
+                </TabPane>
+              </Tabs>
             </Content>
           </Layout>
         </div>

@@ -1,34 +1,29 @@
-import './App.css';
-import SideBar from './components/SideBar';
-
 import {Route, BrowserRouter as Router} from 'react-router-dom';
 import {Switch} from 'react-router-dom';
 import {withRouter} from 'react-router';
 import MangaList from './mangaList';
-import { Layout } from 'antd';
+import Browse from './browse';
+import Library from './library';
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 
-const {Content, Sider } = Layout;
+// setup apollo client for anilist api calls
+const client = new ApolloClient({
+  uri: 'https://graphql.anilist.co',
+  cache: new InMemoryCache()
+});
 
+// setup page routing
 const App = () => (
-  <Router>
-    <Switch>
-    <Route exact path="/" component={Library} />
-    <Route exact path="/mangaList" component={withRouter(MangaList)} />
-    </Switch>
-  </Router>
+  <ApolloProvider client={client}>
+    <Router>
+      <Switch>
+      <Route exact path="/" component={Library} />
+      <Route exact path="/mangaList" component={withRouter(MangaList)} />
+      <Route exact path="/browse" component={withRouter(Browse)} />
+      </Switch>
+    </Router>
+  </ApolloProvider>
 );
 
-function Library() {
-  return (
-    <div className="App">
-      <Sider>
-        <SideBar />
-      </Sider>
-      <Content>
-        <p>Library Here</p>
-      </Content>
-    </div>
-  );
-}
 
 export default App;
