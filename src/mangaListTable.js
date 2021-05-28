@@ -3,7 +3,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { gql } from '@apollo/client';
 import { Table, Button } from 'antd';
 
-export function MangaTable(props) {
+export function MangaListTable(props) {
     const GET_LIST= gql`
         query($status: MediaListStatus) {
             MediaListCollection(userName: "PaleteroMan", type: MANGA, sort:UPDATED_TIME_DESC, status: $status) {
@@ -38,7 +38,7 @@ export function MangaTable(props) {
             title: 'Progress',
             dataIndex: ['Progress', 'Chapters'],
             width: 150,
-            render: (text,record) => (
+            render: (text, record) => (
                 <div>{record['Progress']} <Button icon={<PlusOutlined />}></Button></div>
             )
         },

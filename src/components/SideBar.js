@@ -1,5 +1,4 @@
 import React from 'react';
-import '../App.css';
 import {Link} from 'react-router-dom';
 import { Menu } from 'antd';
 import { DatabaseOutlined, BookOutlined, SearchOutlined, HistoryOutlined, NotificationOutlined, DownloadOutlined } from '@ant-design/icons';

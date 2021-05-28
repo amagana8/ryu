@@ -4,6 +4,7 @@ import {withRouter} from 'react-router';
 import MangaList from './mangaList';
 import Browse from './browse';
 import Library from './library';
+import MangaPage from './mangaPage';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 
 // setup apollo client for anilist api calls
@@ -17,9 +18,10 @@ const App = () => (
   <ApolloProvider client={client}>
     <Router>
       <Switch>
-      <Route exact path="/" component={Library} />
-      <Route exact path="/mangaList" component={withRouter(MangaList)} />
-      <Route exact path="/browse" component={withRouter(Browse)} />
+        <Route exact path="/" component={Library} />
+        <Route exact path="/mangaList" component={withRouter(MangaList)} />
+        <Route exact path="/browse" component={withRouter(Browse)} />
+        <Route exact path="/mangaPage" component={withRouter(MangaPage)} />
       </Switch>
     </Router>
   </ApolloProvider>

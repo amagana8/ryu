@@ -1,8 +1,8 @@
 import SideBar from './components/SideBar';
 import { Layout, Tabs } from 'antd';
-import { MangaTable } from './mangaTable';
+import { MangaListTable } from './mangaListTable';
 
-const {Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 const { TabPane } = Tabs;
 
 const MangaList = () => {
@@ -15,19 +15,19 @@ const MangaList = () => {
             <Content>
               <Tabs type="card">
 				        <TabPane tab="Reading" key="1">
-                  <MangaTable status='CURRENT'/>
+                  <MangaListTable status='CURRENT'/>
                 </TabPane>
                 <TabPane tab="Completed" key="2">
-                  <MangaTable status='COMPLETED'/>
+                  <MangaListTable status='COMPLETED'/>
                 </TabPane>
                 <TabPane tab="Paused" key="3">
-                  <MangaTable status='PAUSED'/>
+                  <MangaListTable status='PAUSED'/>
                 </TabPane>
                 <TabPane tab="Dropped" key="4">
-                  <MangaTable status='DROPPED'/>
+                  <MangaListTable status='DROPPED'/>
                 </TabPane>
                 <TabPane tab="Planning" key="5">
-                  <MangaTable status='PLANNING'/>
+                  <MangaListTable status='PLANNING'/>
                 </TabPane>
               </Tabs>
             </Content>
