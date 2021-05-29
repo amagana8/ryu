@@ -39,7 +39,7 @@ export function MangaListTable(props) {
             dataIndex: ['Progress', 'Chapters'],
             width: 150,
             render: (text, record) => (
-                <div>{record['Progress']} <Button icon={<PlusOutlined />}></Button></div>
+                <div>{record['Progress']} <Button type="link" icon={<PlusOutlined style={{fontSize: 'small'}}/>}></Button></div>
             )
         },
         {

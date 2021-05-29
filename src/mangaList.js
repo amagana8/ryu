@@ -14,7 +14,7 @@ const MangaList = () => {
             </Sider>
             <Content>
               <Tabs type="card">
-				        <TabPane tab="Reading" key="1">
+                <TabPane tab="Reading" key="1">
                   <MangaListTable status='CURRENT'/>
                 </TabPane>
                 <TabPane tab="Completed" key="2">

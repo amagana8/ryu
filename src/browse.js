@@ -1,5 +1,5 @@
-import {useState, useEffect} from 'react';
-import {useHistory} from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import SideBar from './components/SideBar';
 import { Layout, Input, Table, Button } from 'antd';
 import axios from 'axios';
@@ -8,8 +8,8 @@ const { Content, Sider } = Layout;
 const { Search } = Input;
 
 const Browse = () => {
-    const [state, setstate] = useState([]);
-    const [loading, setloading] = useState(true);
+    const [state, setState] = useState([]);
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         getData();
     }, []);
@@ -20,8 +20,8 @@ const Browse = () => {
         await axios.get('https://api.mangadex.org/manga', {
             params: {title: value}
         }).then(res => { 
-            setloading(false);
-            setstate(res.data.results.map(row => ({
+            setLoading(false);
+            setState(res.data.results.map(row => ({
                 Title: row.data.attributes.title.en,
                 Id: row.data.id
             })));

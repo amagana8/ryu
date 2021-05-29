@@ -1,17 +1,20 @@
 import axios from 'axios';
-import {useState, useEffect} from 'react';
-import { Layout, Table, Typography } from 'antd';
+import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Button, Layout, Table, Typography } from 'antd';
 import SideBar from './components/SideBar';
 
 const { Content, Sider } = Layout;
 const { Title } = Typography;
 
 const MangaPage = () => {
-    const [state, setstate] = useState([]);
-    const [loading, setloading] = useState(true);
+    const [state, setState] = useState([]);
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         getData();
     }, []);
+
+    const history = useHistory();
 
     const getData = async() => {
         await axios.get(`https://api.mangadex.org/manga/${sessionStorage.getItem("mangaId")}/feed`, {
@@ -21,24 +24,23 @@ const MangaPage = () => {
             }
         })
         .then(res => {
-            setloading(false);
-            setstate(res.data.results.map(row => ({
+            setLoading(false);
+            setState(res.data.results.map(row => ({
                 Chapter: row.data.attributes.chapter,
+                Hash: row.data.attributes.hash,
+                Data: row.data.attributes.data,
                 Title: row.data.attributes.title,
                 ChapterId: row.data.id,
                 GroupId: row.relationships[0].id
             })));
         });
+    }
 
-        // for (const chapter of state) {
-        //     await axios.get('https://api.mangadex.org/group', {
-        //         params: { ids: [chapter.GroupId] }
-        //     })
-        //     .then(res => {
-        //         setloading(false);
-        //         chapter.GroupId = res.data.results[0].data.attributes.name;
-        //     });
-        // }
+    function handleClick(record) {
+        sessionStorage.setItem("chapterId", record.ChapterId);
+        sessionStorage.setItem("chapterHash", record.Hash);
+        sessionStorage.setItem("chapterData", record.Data);
+        history.push("/reader");
     }
 
     const columns = [
@@ -50,7 +52,10 @@ const MangaPage = () => {
         {
             title: 'Title',
             dataIndex: 'Title',
-            width: 150
+            width: 150,
+            render:(text, record) => (
+                <div><Button type="link" onClick={() => handleClick(record)}>{text}</Button></div>
+            )
         }
     ];
 
