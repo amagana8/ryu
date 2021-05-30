@@ -2,16 +2,14 @@ import SideBar from './components/SideBar';
 import { Layout, Tabs } from 'antd';
 import { MangaListTable } from './mangaListTable';
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 const { TabPane } = Tabs;
 
 const MangaList = () => {
     return (
         <div className="MangaList">
           <Layout>
-            <Sider>
-                <SideBar item='2'/>
-            </Sider>
+            <SideBar item='2'/>
             <Content>
               <Tabs type="card">
                 <TabPane tab="Reading" key="1">

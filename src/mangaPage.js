@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, Layout, Table, Typography } from 'antd';
 import SideBar from './components/SideBar';
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 const { Title } = Typography;
 
 const MangaPage = () => {
@@ -62,9 +62,7 @@ const MangaPage = () => {
     return(
         <div className="MangaPage">
             <Layout>
-                <Sider>
-                    <SideBar item='3'/>
-                </Sider>
+                <SideBar item='3'/>
                 <Content>
                     <Title>{sessionStorage.getItem("mangaTitle")}</Title>
                 <div>

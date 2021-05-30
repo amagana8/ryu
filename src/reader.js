@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Layout, List } from 'antd';
 import SideBar from './components/SideBar';
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 
 const Reader = () => {
     const [state, setState] = useState([]);
@@ -30,9 +30,7 @@ const Reader = () => {
     return(
         <div className="MangaPage">
             <Layout>
-                <Sider>
-                    <SideBar item='3'/>
-                </Sider>
+                <SideBar item='3'/>
                 <Content>
                     <div>
                         {loading ? (
@@ -44,7 +42,14 @@ const Reader = () => {
                                 dataSource={state}
                                 renderItem={item => (
                                     <List.Item>
-                                        <img src={item.Url} />
+                                        <img
+                                            style={{
+                                                display: 'block',
+                                                marginLeft: 'auto',
+                                                marginRight: 'auto'
+                                            }}
+                                            src={item.Url}
+                                        />
                                     </List.Item>
                                 )}
                             >

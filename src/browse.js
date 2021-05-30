@@ -4,7 +4,7 @@ import SideBar from './components/SideBar';
 import { Layout, Input, Table, Button } from 'antd';
 import axios from 'axios';
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 const { Search } = Input;
 
 const Browse = () => {
@@ -48,9 +48,7 @@ const Browse = () => {
     return(
         <div className="Browse">
             <Layout>
-                <Sider>
-                    <SideBar item='3'/>
-                </Sider>
+                <SideBar item='3'/>
                 <Content>
                     <Search
                         placeholder="search MangaDex"
