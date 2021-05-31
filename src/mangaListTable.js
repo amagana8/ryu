@@ -5,8 +5,8 @@ import { Table, Button } from 'antd';
 
 export function MangaListTable(props) {
     const GET_LIST= gql`
-        query($status: MediaListStatus) {
-            MediaListCollection(userName: "PaleteroMan", type: MANGA, sort:UPDATED_TIME_DESC, status: $status) {
+        query($userName: String, $status: MediaListStatus) {
+            MediaListCollection(userName: $userName, type: MANGA, sort:UPDATED_TIME_DESC, status: $status) {
                 lists {
                     name
                     entries {
@@ -25,7 +25,10 @@ export function MangaListTable(props) {
     `;
 
     const { loading, error, data } = useQuery(GET_LIST, {
-        variables: {status: props.status}
+        variables: {
+            userName: localStorage.getItem("username"),
+            status: props.status
+        }
     });
 
     const columns = [

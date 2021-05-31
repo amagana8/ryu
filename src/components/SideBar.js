@@ -7,7 +7,8 @@ import {
     SearchOutlined,
     HistoryOutlined,
     NotificationOutlined,
-    DownloadOutlined
+    DownloadOutlined,
+    SettingOutlined
 } from '@ant-design/icons';
 
 const { Sider } = Layout;
@@ -59,6 +60,9 @@ export default class SideBar extends React.Component {
                         </Menu.Item>
                         <Menu.Item key="6" icon={<DownloadOutlined />}>
                             Downloads
+                        </Menu.Item>
+                        <Menu.Item key="7" icon={<SettingOutlined />}>
+                            <Link to="/settings">Settings</Link>
                         </Menu.Item>
                     </Menu>
                 </Sider>
