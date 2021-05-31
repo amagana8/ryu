@@ -1,6 +1,6 @@
-import SideBar from './components/SideBar';
+import { SideBar } from './components/SideBar';
 import { Layout, Tabs } from 'antd';
-import { MangaListTable } from './mangaListTable';
+import { MangaListTable } from './components/mangaListTable';
 
 const { Content } = Layout;
 const { TabPane } = Tabs;

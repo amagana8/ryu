@@ -3,7 +3,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { gql } from '@apollo/client';
 import { Table, Button } from 'antd';
 
-export function MangaListTable(props) {
+function MangaListTable(props) {
     const GET_LIST= gql`
         query($userName: String, $status: MediaListStatus) {
             MediaListCollection(userName: $userName, type: MANGA, sort:UPDATED_TIME_DESC, status: $status) {
@@ -75,3 +75,5 @@ export function MangaListTable(props) {
         </div>
     );
 }
+
+export { MangaListTable };

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Layout, List } from 'antd';
-import SideBar from './components/SideBar';
+import { SideBar } from './components/SideBar';
 
 const { Content } = Layout;
 

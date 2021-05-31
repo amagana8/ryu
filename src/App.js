@@ -1,14 +1,14 @@
 import './App.css';
-import {Route, BrowserRouter as Router} from 'react-router-dom';
-import {Switch} from 'react-router-dom';
-import {withRouter} from 'react-router';
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import MangaList from './mangaList';
 import Browse from './browse';
 import Library from './library';
 import MangaPage from './mangaPage';
 import Reader from './reader';
 import Settings from './settings';
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 
 // setup apollo client for graphql api calls
 const client = new ApolloClient({

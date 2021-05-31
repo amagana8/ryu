@@ -13,7 +13,7 @@ import {
 
 const { Sider } = Layout;
 
-export default class SideBar extends React.Component {
+class SideBar extends React.Component {
     state = {
         collapsed: false,
     };
@@ -70,3 +70,5 @@ export default class SideBar extends React.Component {
         );
     }
 }
+
+export { SideBar };

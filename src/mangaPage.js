@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Layout, Table, Typography } from 'antd';
-import SideBar from './components/SideBar';
+import { SideBar } from './components/SideBar';
 
 const { Content } = Layout;
 const { Title } = Typography;

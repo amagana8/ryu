@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import SideBar from './components/SideBar';
+import { SideBar } from './components/SideBar';
 import { Layout, Typography, Form, Input, Button, Space, Modal } from 'antd';
 import { GithubFilled, HeartFilled } from '@ant-design/icons';
 import { config } from './config';

@@ -1,8 +1,8 @@
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import SideBar from './components/SideBar';
+import { SideBar } from './components/SideBar';
 import { Layout, Input, Table, Button } from 'antd';
-import axios from 'axios';
 
 const { Content } = Layout;
 const { Search } = Input;
