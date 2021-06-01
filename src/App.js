@@ -13,7 +13,12 @@ import Settings from './settings';
 // setup apollo client for graphql api calls
 const client = new ApolloClient({
   uri: 'https://graphql.anilist.co',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  headers: {
+    'Authorization': 'Bearer ' + localStorage.getItem("accessToken"),
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  }
 });
 
 // setup page routing
