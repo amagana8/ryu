@@ -3,12 +3,16 @@ import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Layout, Table, Typography } from 'antd';
 import { SideBar } from './components/SideBar';
+import { db } from './components/db';
+import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 
 const { Content } = Layout;
 const { Title } = Typography;
 
 const MangaPage = () => {
+
     const [state, setState] = useState([]);
+    const [favorited, setFavorite] = useState(false);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         getData();
@@ -17,6 +21,12 @@ const MangaPage = () => {
     const history = useHistory();
 
     const getData = async() => {
+        let currentManga = await db.library.get({id: sessionStorage.getItem("mangaId")});
+        if (!currentManga) {
+            setFavorite(false);
+        } else {
+            setFavorite(true);
+        }
         await axios.get(`https://api.mangadex.org/manga/${sessionStorage.getItem("mangaId")}/feed`, {
             params: {
                 'translatedLanguage': ['en'],
@@ -43,6 +53,19 @@ const MangaPage = () => {
         history.push("/reader");
     }
 
+    async function addtoLibrary() {
+        await db.library.add({
+            id: sessionStorage.getItem("mangaId"),
+            title: sessionStorage.getItem("mangaTitle")
+        });
+        setFavorite(true);
+    }
+
+    async function removeFromLibrary() {
+        await db.library.delete(sessionStorage.getItem("mangaId"));
+        setFavorite(false);
+    }
+
     const columns = [
         {
             title: 'Chapter',
@@ -58,23 +81,25 @@ const MangaPage = () => {
             )
         }
     ];
-
     return(
         <div className="MangaPage">
             <Layout>
                 <SideBar item='3'/>
                 <Content>
                     <Title>{sessionStorage.getItem("mangaTitle")}</Title>
-                <div>
-                    {loading ? (
-                        "Loading"
-                    ) : (
-                        <Table
-                        columns={columns}
-                        dataSource={state}
-                        pagination={{ pageSize: 50 }}
-                        />
-                    )}
+                    <div>
+                        {favorited ? <Button type="text" icon={<HeartFilled />} onClick={() => removeFromLibrary()} /> : <Button type="text" icon={<HeartOutlined />} onClick={() => addtoLibrary()}/>}
+                    </div>
+                    <div>
+                        {loading ? (
+                            "Loading"
+                        ) : (
+                            <Table
+                            columns={columns}
+                            dataSource={state}
+                            pagination={{ pageSize: 50 }}
+                            />
+                        )}
                     </div>
                 </Content>
             </Layout>

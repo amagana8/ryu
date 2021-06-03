@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { SideBar } from './components/SideBar';
-import { Layout, Input, Table, Button } from 'antd';
+import { Layout, Input } from 'antd';
+import { MangaGrid } from './components/mangaGrid';
 
 const { Content } = Layout;
 const { Search } = Input;
@@ -13,8 +13,6 @@ const Browse = () => {
     useEffect(() => {
         getData();
     }, []);
-
-    const history = useHistory();
 
     const getData = async(value) => {
         await axios.get('https://api.mangadex.org/manga', {
@@ -27,23 +25,6 @@ const Browse = () => {
             })));
         }); 
     }
-
-    function handleClick(record) {
-        sessionStorage.setItem("mangaId", record.Id);
-        sessionStorage.setItem("mangaTitle", record.Title);
-        history.push("/mangaPage");
-    }
-
-    const columns = [
-        {
-            title: 'Title',
-            dataIndex: 'Title',
-            width: 150,
-            render:(text, record) => (
-                <div><Button type="link" onClick={() => handleClick(record)}>{text}</Button></div>
-            )
-        }
-    ];
 
     return(
         <div className="Browse">
@@ -58,11 +39,7 @@ const Browse = () => {
                         {loading ? (
                             "Loading"
                         ) : (
-                            <Table
-                            columns={columns}
-                            dataSource={state}
-                            pagination={{ pageSize: 50 }}
-                            />
+                            <MangaGrid data={state}/>
                         )}
                     </div>
                 </Content>

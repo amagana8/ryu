@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.1.9",
     "antd": "4.16.0",
     "axios": "^0.21.1",
+    "dexie": "^3.0.3",
     "graphql": "^15.5.0",
     "node-fetch": "^2.6.1",
     "react": "^17.0.2",

@@ -169,7 +169,7 @@ function MangaListTable(props) {
         }
     ];
 
-    if(localStorage.getItem("username") === null) {
+    if(!localStorage.getItem("username")) {
         return <p>Please go to settings and login with AniList to see your manga list.</p>
     }
 
