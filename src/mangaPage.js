@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Layout, Table, Typography } from 'antd';
+import { Button, Layout, Table, Typography, Space, Divider, Spin } from 'antd';
 import { SideBar } from './components/SideBar';
 import { db } from './components/db';
-import { HeartOutlined, HeartFilled } from '@ant-design/icons';
+import { HeartOutlined, HeartFilled, LoadingOutlined } from '@ant-design/icons';
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -84,15 +84,21 @@ const MangaPage = () => {
     return(
         <div className="MangaPage">
             <Layout>
-                <SideBar item='3'/>
+                <SideBar />
                 <Content>
-                    <Title>{sessionStorage.getItem("mangaTitle")}</Title>
-                    <div>
-                        {favorited ? <Button type="text" icon={<HeartFilled />} onClick={() => removeFromLibrary()} /> : <Button type="text" icon={<HeartOutlined />} onClick={() => addtoLibrary()}/>}
-                    </div>
+                    <Space split={<Divider type="vertical" />}>
+                        <Title>{sessionStorage.getItem("mangaTitle")}</Title>
+                        <div>
+                            {favorited ? (
+                                <Button type="text" icon={<HeartFilled />} onClick={() => removeFromLibrary()} />
+                            ) : (
+                                <Button type="text" icon={<HeartOutlined />} onClick={() => addtoLibrary()}/>
+                            )}
+                        </div>
+                    </Space>
                     <div>
                         {loading ? (
-                            "Loading"
+                            <Spin style={{display: 'grid', justifyContent: 'center'}} indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
                         ) : (
                             <Table
                             columns={columns}

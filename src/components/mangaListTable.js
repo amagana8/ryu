@@ -1,7 +1,8 @@
 import { useQuery, useMutation } from '@apollo/client';
 import { PlusOutlined } from '@ant-design/icons';
 import { gql } from '@apollo/client';
-import { Table, Button, Select, Popover, InputNumber, Space, Form } from 'antd';
+import { Table, Button, Select, Popover, InputNumber, Space, Form, Spin, Alert } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 
@@ -170,15 +171,29 @@ function MangaListTable(props) {
     ];
 
     if(!localStorage.getItem("username")) {
-        return <p>Please go to settings and login with AniList to see your manga list.</p>
+        return(
+            <Alert
+                message="No AniList Account"
+                description="Please go to settings and login with AniList to see your manga list."
+                type="info"
+                showIcon
+            />
+        );
     }
 
     if (loading) { 
-        return <p>Loading</p>;
+        return <Spin style={{display: 'grid', justifyContent: 'center'}} indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />;
     }
 
     if (error) {
-        return <p>Error! ${error}</p>;
+        return(
+            <Alert
+                message="Error"
+                description={error}
+                type="error"
+                showIcon
+            />
+        );
     }
 
     return(

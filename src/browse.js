@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { SideBar } from './components/SideBar';
-import { Layout, Input } from 'antd';
+import { Layout, Input, Spin } from 'antd';
 import { MangaGrid } from './components/mangaGrid';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const { Content } = Layout;
 const { Search } = Input;
@@ -37,7 +38,7 @@ const Browse = () => {
                     />
                     <div>
                         {loading ? (
-                            "Loading"
+                            <Spin style={{display: 'grid', justifyContent: 'center'}} indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
                         ) : (
                             <MangaGrid data={state}/>
                         )}

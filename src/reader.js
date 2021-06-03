@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Layout, List } from 'antd';
+import { Layout, List, Spin } from 'antd';
 import { SideBar } from './components/SideBar';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const { Content } = Layout;
 
@@ -30,11 +31,11 @@ const Reader = () => {
     return(
         <div className="MangaPage">
             <Layout>
-                <SideBar item='3'/>
+                <SideBar />
                 <Content>
                     <div>
                         {loading ? (
-                            "Loading"
+                            <Spin style={{display: 'grid', justifyContent: 'center'}} indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
                         ) : (
                             <List
                                 itemLayout="vertical"

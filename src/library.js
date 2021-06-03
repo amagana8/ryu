@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { SideBar } from './components/SideBar';
-import { Layout } from 'antd';
+import { Layout, Spin } from 'antd';
 import { MangaGrid } from './components/mangaGrid';
 import { db } from './components/db';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const { Content } = Layout;
 
@@ -30,7 +31,7 @@ const Library = () => {
                 <Content>
                     <div>
                     {loading ? (
-                        "Loading"
+                        <Spin style={{display: 'grid', justifyContent: 'center'}} indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
                     ) : (
                         <MangaGrid data={state}/>
                     )}
