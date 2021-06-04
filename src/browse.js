@@ -18,11 +18,12 @@ const Browse = () => {
     const getData = async(value) => {
         await axios.get('https://api.mangadex.org/manga', {
             params: {title: value}
-        }).then(res => { 
+        }).then(res => {
             setLoading(false);
             setState(res.data.results.map(row => ({
                 Title: row.data.attributes.title.en,
-                Id: row.data.id
+                Id: row.data.id,
+                AnilistId: row.data.attributes.links.al
             })));
         }); 
     }

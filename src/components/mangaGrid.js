@@ -8,6 +8,7 @@ function MangaGrid(props) {
     function handleClick(record) {
         sessionStorage.setItem("mangaId", record.Id);
         sessionStorage.setItem("mangaTitle", record.Title);
+        sessionStorage.setItem("anilistId", record.AnilistId);
         history.push("/mangaPage");
     }
     

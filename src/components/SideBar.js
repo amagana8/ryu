@@ -53,7 +53,7 @@ class SideBar extends React.Component {
                             <Link to="/browse">Search</Link>
                         </Menu.Item>
                         <Menu.Item key="4" icon={<HistoryOutlined />}>
-                            History
+                            <Link to="/history">History</Link>
                         </Menu.Item>
                         <Menu.Item key="5" icon={<NotificationOutlined />}>
                             Updates

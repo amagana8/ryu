@@ -2,7 +2,7 @@ import Dexie from 'dexie';
 
 const db = new Dexie('ryuDB');
 db.version(1).stores({
-    library: `id, title`
+    library: `id, title, anilistId`
 });
 
 export { db };

@@ -21,11 +21,10 @@ const MangaPage = () => {
     const history = useHistory();
 
     const getData = async() => {
-        let currentManga = await db.library.get({id: sessionStorage.getItem("mangaId")});
-        if (!currentManga) {
-            setFavorite(false);
-        } else {
+        if (await db.library.get({id: sessionStorage.getItem("mangaId")})) {
             setFavorite(true);
+        } else {
+            setFavorite(false);
         }
         await axios.get(`https://api.mangadex.org/manga/${sessionStorage.getItem("mangaId")}/feed`, {
             params: {
@@ -50,13 +49,15 @@ const MangaPage = () => {
         sessionStorage.setItem("chapterId", record.ChapterId);
         sessionStorage.setItem("chapterHash", record.Hash);
         sessionStorage.setItem("chapterData", record.Data);
+        sessionStorage.setItem("chapterNum", record.Chapter);
         history.push("/reader");
     }
 
     async function addtoLibrary() {
         await db.library.add({
             id: sessionStorage.getItem("mangaId"),
-            title: sessionStorage.getItem("mangaTitle")
+            title: sessionStorage.getItem("mangaTitle"),
+            anilistId: sessionStorage.getItem("anilistId")
         });
         setFavorite(true);
     }

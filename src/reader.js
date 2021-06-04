@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { gql, useLazyQuery, useMutation } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import { Layout, List, Spin } from 'antd';
 import { SideBar } from './components/SideBar';
@@ -13,7 +14,43 @@ const Reader = () => {
         getData();
     }, []);
 
+    const GET_MEDIALIST = gql`
+        query ($userId: Int, $mediaId: Int) {
+            MediaList(userId: $userId, mediaId: $mediaId) {
+                id
+            }
+        }
+    `;
+
+    const [getMediaList] = useLazyQuery(GET_MEDIALIST, {
+        onCompleted: (data) => {
+            updateProgress({
+                variables: {
+                    id: data.MediaList.id,
+                    progress: sessionStorage.getItem("chapterNum")
+                }
+            });
+        }
+    });
+
+    const UPDATE_PROGRESS = gql`
+        mutation ($id: Int, $progress: Int) {
+            SaveMediaListEntry (id: $id, progress: $progress) {
+                id
+                progress
+            }
+        }
+    `;
+
+    const [updateProgress] = useMutation(UPDATE_PROGRESS);
+
     const getData = async() => {
+        getMediaList({
+            variables: {
+                userId: localStorage.getItem("UserId"),
+                mediaId: sessionStorage.getItem("anilistId")
+            }
+        });
         const chapters = sessionStorage.getItem("chapterData").split(',');
         let images = [];
         let baseUrl = (await axios.get(`https://api.mangadex.org/at-home/server/${sessionStorage.getItem("chapterId")}`)).data.baseUrl;

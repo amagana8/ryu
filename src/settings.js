@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { gql, useLazyQuery } from '@apollo/client';
 import { SideBar } from './components/SideBar';
 import { Layout, Typography, Form, Input, Button, Space, Modal } from 'antd';
 import { GithubFilled, HeartFilled } from '@ant-design/icons';
@@ -24,7 +25,26 @@ const Settings = () => {
         wrapperCol: { offset: 8, span: 16 },
     };
 
+    const GET_USERID = gql`
+        query($name: String) {
+            User(name: $name) {
+                id
+            }
+        }
+    `;
+
+    const [getUserId] = useLazyQuery(GET_USERID, {
+        onCompleted: (data) => {
+            localStorage.setItem("UserId", data.User.id);
+        }
+    });
+
     const onFinish = (input) => {
+        getUserId({
+            variables: {
+                name: input.username
+            }
+        });
         localStorage.setItem("username", input.username);
     }
 

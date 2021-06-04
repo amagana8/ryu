@@ -19,7 +19,8 @@ const Library = () => {
             setLoading(false);
             setState(res.map(row => ({
                 Title: row.title,
-                Id: row.id
+                Id: row.id,
+                AniListId: row.anilistId
             })));
         });
     }
