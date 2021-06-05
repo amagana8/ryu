@@ -1,6 +1,5 @@
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery, useMutation, gql } from '@apollo/client';
 import { PlusOutlined } from '@ant-design/icons';
-import { gql } from '@apollo/client';
 import { Table, Button, Select, Popover, InputNumber, Space, Form, Spin, Alert } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
