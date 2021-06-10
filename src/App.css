@@ -1,18 +1,23 @@
 @import '~antd/dist/antd.dark.css';
 
+:root {
+  --bg-primary: #141414;
+  --bg-secondary: #1d1d1d;
+}
+
 .App {
   text-align: center;
 }
 
 body {
-  background-color: #141414;
+  background-color: var(--bg-primary);
 }
 
 .card-container > .ant-tabs-card .ant-tabs-content {
   margin-top: -16px;
 }
 .card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
-  background: #141414;
+  background: var(--bg-primary);
 }
 .card-container > .ant-tabs-card > .ant-tabs-nav::before {
   display: none;
@@ -22,8 +27,16 @@ body {
   border-color: transparent;
 }
 .card-container > .ant-tabs-card .ant-tabs-tab-active {
-  background: #141414;
-  border-color: #141414;
+  background: var(--bg-primary);
+  border-color: var(--bg-primary);
+}
+
+.ant-card-meta-title {
+  white-space: initial;
+}
+
+.ant-card-body {
+  background: var(--bg-secondary);
 }
 
 body::-webkit-scrollbar {

@@ -57,7 +57,8 @@ const MangaPage = () => {
         await db.library.add({
             id: sessionStorage.getItem("mangaId"),
             title: sessionStorage.getItem("mangaTitle"),
-            anilistId: sessionStorage.getItem("anilistId")
+            anilistId: sessionStorage.getItem("anilistId"),
+            coverId: sessionStorage.getItem("coverId")
         });
         setFavorite(true);
     }

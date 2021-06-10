@@ -16,12 +16,13 @@ const Library = () => {
     
     const getData = async() => {
         await db.table("library").toArray().then(res => {
-            setLoading(false);
             setState(res.map(row => ({
                 Title: row.title,
                 Id: row.id,
-                AniListId: row.anilistId
+                AniListId: row.anilistId,
+                CoverId: row.coverId
             })));
+            setLoading(false);
         });
     }
     
@@ -34,7 +35,7 @@ const Library = () => {
                     {loading ? (
                         <Spin style={{display: 'grid', justifyContent: 'center'}} indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
                     ) : (
-                        <MangaGrid data={state}/>
+                        <MangaGrid key={state} data={state}/>
                     )}
                     </div>
                 </Content>

@@ -23,7 +23,8 @@ const Browse = () => {
             setState(res.data.results.map(row => ({
                 Title: row.data.attributes.title.en,
                 Id: row.data.id,
-                AnilistId: row.data.attributes.links.al
+                AnilistId: row.data.attributes.links.al,
+                CoverId: row.relationships[2].id
             })));
         }); 
     }
@@ -41,7 +42,7 @@ const Browse = () => {
                         {loading ? (
                             <Spin style={{display: 'grid', justifyContent: 'center'}} indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
                         ) : (
-                            <MangaGrid data={state}/>
+                            <MangaGrid key={state} data={state}/>
                         )}
                     </div>
                 </Content>
