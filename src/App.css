@@ -31,10 +31,6 @@ body {
   border-color: var(--bg-primary);
 }
 
-.ant-card-meta-title {
-  white-space: initial;
-}
-
 .ant-card-body {
   background: var(--bg-secondary);
 }

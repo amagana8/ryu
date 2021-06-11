@@ -23,8 +23,7 @@ const Browse = () => {
             setState(res.data.results.map(row => ({
                 Title: row.data.attributes.title.en,
                 Id: row.data.id,
-                AnilistId: row.data.attributes.links.al,
-                CoverId: row.relationships[2].id
+                CoverId: (row.relationships.find(rel => rel.type==='cover_art') ? row.relationships.find(rel => rel.type==='cover_art').id : null)
             })));
         }); 
     }

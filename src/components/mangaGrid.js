@@ -10,16 +10,22 @@ function MangaGrid(props) {
     const [state, setState] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
+        setLoading(true);
         getData();
-    }, []);
+    }, [props.data]);
+
 
     const history = useHistory();
 
     const getData = async() => {
         for (const manga of props.data) {
-            await axios.get(`https://api.mangadex.org/cover/${manga.CoverId}`).then(res => {
-            manga.Cover = `https://uploads.mangadex.org/covers/${manga.Id}/${res.data.data.attributes.fileName}`;
-            });
+            if (manga.CoverId) {
+                await axios.get(`https://api.mangadex.org/cover/${manga.CoverId}`).then(res => {
+                    manga.Cover = `https://uploads.mangadex.org/covers/${manga.Id}/${res.data.data.attributes.fileName}`;
+                });
+            } else {
+                manga.Cover = '#';
+            }
         }
         setState(props.data);
         setLoading(false);
@@ -42,11 +48,11 @@ function MangaGrid(props) {
                     grid={{
                         gutter: [16, 48],
                         xs: 1,
-                        sm: 2,
-                        md: 3,
-                        lg: 4,
-                        xl: 5,
-                        xxl: 6,
+                        sm: 1,
+                        md: 2,
+                        lg: 3,
+                        xl: 4,
+                        xxl: 5,
                     }}
                     style={{maxWidth: '98%'}}
                     dataSource={state}
@@ -57,7 +63,7 @@ function MangaGrid(props) {
                                     loading={loading}
                                     hoverable
                                     style={{ width: 240 }}
-                                    cover={<img src={item.Cover} />}
+                                    cover={<img style={{height: 360}} src={item.Cover} />}
                                 >
                                     <Meta title={item.Title} />
                                 </Card>
