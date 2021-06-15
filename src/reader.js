@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Layout, List, Spin } from 'antd';
 import { SideBar } from './components/SideBar';
 import { LoadingOutlined } from '@ant-design/icons';
+import { db } from './components/db';
 
 const { Content } = Layout;
 
@@ -45,10 +46,11 @@ const Reader = () => {
     const [updateProgress] = useMutation(UPDATE_PROGRESS);
 
     const getData = async() => {
+        const manga = await db.library.get(sessionStorage.getItem("mangaId"));
         getMediaList({
             variables: {
                 userId: localStorage.getItem("UserId"),
-                mediaId: sessionStorage.getItem("anilistId")
+                mediaId: manga.anilistId
             }
         });
         const chapters = sessionStorage.getItem("chapterData").split(',');

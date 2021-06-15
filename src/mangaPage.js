@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, Layout, Table, Typography, Space, Divider, Spin } from 'antd';
 import { SideBar } from './components/SideBar';
 import { db } from './components/db';
+import { AniListModal } from './components/aniListModal';
 import { HeartOutlined, HeartFilled, LoadingOutlined } from '@ant-design/icons';
 
 const { Content } = Layout;
@@ -57,7 +58,6 @@ const MangaPage = () => {
         await db.library.add({
             id: sessionStorage.getItem("mangaId"),
             title: sessionStorage.getItem("mangaTitle"),
-            anilistId: sessionStorage.getItem("anilistId"),
             coverId: sessionStorage.getItem("coverId")
         });
         setFavorite(true);
@@ -83,6 +83,7 @@ const MangaPage = () => {
             )
         }
     ];
+    
     return(
         <div className="MangaPage">
             <Layout>
@@ -97,6 +98,7 @@ const MangaPage = () => {
                                 <Button type="text" icon={<HeartOutlined />} onClick={() => addtoLibrary()}/>
                             )}
                         </div>
+                        <AniListModal />
                     </Space>
                     <div>
                         {loading ? (
