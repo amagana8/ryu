@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { gql, useLazyQuery } from '@apollo/client';
 import { SideBar } from './components/SideBar';
@@ -61,6 +62,15 @@ const Settings = () => {
     
     const handleCancel = () => {
         setIsModalVisible(false);
+    };
+
+    const mdOnFinish = async(input) => {
+        await axios.post('https://api.mangadex.org/auth/login', {
+            username: input.username,
+            password: input.password
+        }).then(res => {
+            localStorage.setItem("mdToken", res.data.token.session);
+        });
     };
 
     return(
@@ -127,7 +137,35 @@ const Settings = () => {
                                 </Form>
                             </Modal>
                         </Form.Item>
-                        <br />
+                        </Form>
+                        <Title style={{ textAlign: 'center' }}>Connect with MangaDex</Title>
+                        <Form
+                            {...layout}
+                            style={{width: '75%'}}
+                            id="mdUsernameForm"
+                            onFinish={mdOnFinish}
+                        >
+                            <Form.Item
+                                label="Username"
+                                name="username"
+                                rules={[{ required: true, message: 'Please input your username!' }]}
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item
+                                label="Password"
+                                name="password"
+                                rules={[{ required: true, message: 'Please input your password!' }]}
+                            >
+                                <Input.Password />
+                            </Form.Item>
+                            <Form.Item {...tailLayout}>
+                                <Button type="primary" htmlType="submit">
+                                    Login
+                                </Button>
+                            </Form.Item>
+                        </Form>
+                        <Form>
                         <Form.Item {...tailLayout}>
                             <Title>External Links</Title>
                             <Space>

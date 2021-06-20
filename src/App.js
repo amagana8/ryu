@@ -10,6 +10,7 @@ import MangaPage from './mangaPage';
 import Reader from './reader';
 import Settings from './settings';
 import History from './history';
+import Updates from './updates';
 
 // setup apollo client for graphql api calls
 const client = new ApolloClient({
@@ -31,6 +32,7 @@ const App = () => (
         <Route exact path="/mangaList" component={withRouter(MangaList)} />
         <Route exact path="/browse" component={withRouter(Browse)} />
         <Route exact path="/history" component={withRouter(History)} />
+        <Route exact path="/updates" component={withRouter(Updates)} />
         <Route exact path="/settings" component={withRouter(Settings)} />
         <Route exact path="/mangaPage" component={withRouter(MangaPage)} />
         <Route exact path="/reader" component={withRouter(Reader)} />
