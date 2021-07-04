@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { SideBar } from './components/SideBar';
-import { Layout, Spin, List, Table } from 'antd';
+import { Layout, Spin, Table, message } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
 
@@ -24,17 +24,24 @@ const Updates = () => {
                 'order[updatedAt]': 'desc'
 
             }
+        }).catch(error => {
+            message.error('Could not retrieve list. Please ensure you are logged into Mangadex.');
+            console.log(error);
         });
-        const feedData = (feed.data.results.map(row => ({
-            Manga: row.relationships.find(rel => rel.type==='manga').id,
-            Chapter: row.data.attributes.chapter
-        })));
-        for (const chapter of feedData) {
-            await axios.get(`https://api.mangadex.org/manga/${chapter.Manga}`).then(res => {
-                chapter.Manga = res.data.data.attributes.title.en;
-            });
+
+        if (feed) {
+            const feedData = (feed.data.results.map((row, index) => ({
+                key: index,
+                Manga: row.relationships.find(rel => rel.type==='manga').id,
+                Chapter: row.data.attributes.chapter
+            })));
+            for (const chapter of feedData) {
+                await axios.get(`https://api.mangadex.org/manga/${chapter.Manga}`).then(res => {
+                    chapter.Manga = res.data.data.attributes.title.en;
+                });
+            }
+            setState(feedData);
         }
-        setState(feedData);
         setLoading(false);
     }
 

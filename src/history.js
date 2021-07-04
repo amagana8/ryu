@@ -61,7 +61,8 @@ const History = () => {
                         ) : (
                             <Table
                                 columns={columns}
-                                dataSource={data.Page.activities.map(row => ({
+                                dataSource={data.Page.activities.map((row, index) => ({
+                                    key: index,
                                     Title: row.media.title.romaji,
                                     Progress: row.progress,
                                     Date: DateTime.fromSeconds(row.createdAt).toFormat('DDD t')

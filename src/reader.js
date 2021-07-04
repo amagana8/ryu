@@ -13,6 +13,7 @@ const Reader = () => {
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         getData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const GET_MEDIALIST = gql`
@@ -89,6 +90,7 @@ const Reader = () => {
                                                 marginRight: 'auto'
                                             }}
                                             src={item.Url}
+                                            alt=""
                                         />
                                     </List.Item>
                                 )}

@@ -36,6 +36,7 @@ const MangaPage = () => {
         .then(res => {
             setLoading(false);
             setState(res.data.results.map(row => ({
+                key: row.data.id,
                 Chapter: row.data.attributes.chapter,
                 Hash: row.data.attributes.hash,
                 Data: row.data.attributes.data,

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { gql, useLazyQuery } from '@apollo/client';
 import { SideBar } from './components/SideBar';
-import { Layout, Typography, Form, Input, Button, Space, Modal } from 'antd';
+import { Layout, Typography, Form, Input, Button, Space, Modal, message } from 'antd';
 import { GithubFilled, HeartFilled } from '@ant-design/icons';
 import { config } from './config';
 
@@ -47,6 +47,7 @@ const Settings = () => {
             }
         });
         localStorage.setItem("username", input.username);
+        message.success('Username Saved!');
     }
 
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -58,6 +59,7 @@ const Settings = () => {
     const handleSubmit = (input) => {
         localStorage.setItem("accessToken", input.token);
         setIsModalVisible(false);
+        message.success('Anislist connected!');
     };
     
     const handleCancel = () => {
@@ -70,6 +72,10 @@ const Settings = () => {
             password: input.password
         }).then(res => {
             localStorage.setItem("mdToken", res.data.token.session);
+            message.success('Login successful!');
+        }).catch(error => {
+            message.error('Login failed, please try again.');
+            console.log(error);
         });
     };
 
@@ -85,13 +91,14 @@ const Settings = () => {
                         style={{width: '75%'}}
                         id="usernameForm"
                         onFinish={onFinish}
+                        initialValues={{username: localStorage.getItem("username")}}
                     >
                         <Form.Item
                             label="Username"
                             name="username"
                             rules={[{ required: true, message: 'Please input your username!' }]}
                         >
-                            <Input defaultValue={localStorage.getItem("username")}/>
+                            <Input />
                         </Form.Item>
                         <Form.Item {...tailLayout}>
                             <Space>

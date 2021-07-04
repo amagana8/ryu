@@ -56,10 +56,10 @@ class SideBar extends React.Component {
                             <Link to="/history">History</Link>
                         </Menu.Item>
                         <Menu.Item key="5" icon={<NotificationOutlined />}>
-                        <Link to="/updates">Updates</Link>
+                            <Link to="/updates">Updates</Link>
                         </Menu.Item>
                         <Menu.Item key="6" icon={<DownloadOutlined />}>
-                            Downloads
+                            <Link to="/downloads">Downloads</Link>
                         </Menu.Item>
                         <Menu.Item key="7" icon={<SettingOutlined />}>
                             <Link to="/settings">Settings</Link>

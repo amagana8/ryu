@@ -11,25 +11,24 @@ function MangaGrid(props) {
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         setLoading(true);
+        async function getData() {
+            for (const manga of props.data) {
+                if (manga.CoverId) {
+                    await axios.get(`https://api.mangadex.org/cover/${manga.CoverId}`).then(res => {
+                        manga.Cover = `https://uploads.mangadex.org/covers/${manga.Id}/${res.data.data.attributes.fileName}`;
+                    });
+                } else {
+                    manga.Cover = '#';
+                }
+            }
+            setState(props.data);
+            setLoading(false);
+        }
         getData();
     }, [props.data]);
 
 
     const history = useHistory();
-
-    const getData = async() => {
-        for (const manga of props.data) {
-            if (manga.CoverId) {
-                await axios.get(`https://api.mangadex.org/cover/${manga.CoverId}`).then(res => {
-                    manga.Cover = `https://uploads.mangadex.org/covers/${manga.Id}/${res.data.data.attributes.fileName}`;
-                });
-            } else {
-                manga.Cover = '#';
-            }
-        }
-        setState(props.data);
-        setLoading(false);
-    }
 
     function handleClick(record) {
         sessionStorage.setItem("mangaId", record.Id);
@@ -62,7 +61,7 @@ function MangaGrid(props) {
                                     loading={loading}
                                     hoverable
                                     style={{ width: 240 }}
-                                    cover={<img style={{height: 360}} src={item.Cover} />}
+                                    cover={<img style={{height: 360}} src={item.Cover} alt="" />}
                                 >
                                     <Meta title={item.Title} />
                                 </Card>

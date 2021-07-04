@@ -200,6 +200,7 @@ function MangaListTable(props) {
             <Table
                 columns={columns}
                 dataSource={data.MediaListCollection.lists[0].entries.map(row => ({
+                    key: row.id,
                     Title: row.media.title.romaji,
                     Chapters:row.media.chapters,
                     Progress: row.progress,
