@@ -8,7 +8,6 @@ function createWindow () {
     width: 1400,
     height: 1000,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
       webSecurity: false
     }
   });
@@ -16,7 +15,7 @@ function createWindow () {
   mainWindow.setMenuBarVisibility(false);
 
   // and load the index.html of the app.
-  mainWindow.loadURL('http://localhost:3000');
+  mainWindow.loadFile(path.join(__dirname, "../build/index.html"));
 
   // open external links in default browser
   mainWindow.webContents.on('new-window', function(event, url) {

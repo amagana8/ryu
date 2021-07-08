@@ -1,5 +1,11 @@
 {
   "name": "ryu",
+  "author": {
+    "name": "Alexander Magana",
+    "url": "github.com/amagana8"
+  },
+  "description": "Manga reader with Anilist integration for Windows, Mac, and Linux.",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -15,13 +21,15 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3"
   },
-  "main": "src/electron.js",
+  "main": "public/electron.js",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron": "electron ."
+    "electron": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "eslintConfig": {
     "extends": [
@@ -42,6 +50,20 @@
     ]
   },
   "devDependencies": {
-    "electron": "^13.0.1"
+    "electron": "^13.0.1",
+    "electron-builder": "^22.11.7"
+  },
+  "build": {
+    "appId": "com.electron.ryu",
+    "mac": {
+      "category": "public.app-category.entertainment"
+    },
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "public"
+    }
   }
 }

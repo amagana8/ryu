@@ -1,6 +1,6 @@
 import './App.css';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import { Route, HashRouter as Router } from 'react-router-dom';
 import { Switch } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import MangaList from './mangaList';

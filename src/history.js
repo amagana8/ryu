@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
-import { Layout, Spin, Table } from 'antd';
+import { Layout, Spin, Table, Alert } from 'antd';
 import { SideBar } from './components/SideBar';
 import { LoadingOutlined } from '@ant-design/icons';
 import { DateTime } from 'luxon';
@@ -56,18 +56,28 @@ const History = () => {
                 <SideBar item='4'/>
                 <Content>
                     <div>
-                        {loading ? (
-                            <Spin style={{display: 'grid', justifyContent: 'center'}} indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+                        {localStorage.getItem("userId") ? (
+                            <div>
+                                {loading ? (
+                                    <Spin style={{display: 'grid', justifyContent: 'center'}} indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+                                ) : (
+                                    <Table
+                                        columns={columns}
+                                        dataSource={data.Page.activities.map(row => ({
+                                            Title: row.media.title.romaji,
+                                            Progress: row.progress,
+                                            Date: DateTime.fromSeconds(row.createdAt).toFormat('DDD t')
+                                        }))}
+                                        pagination={{pageSize: 50}}
+                                    />
+                                )}
+                            </div>
                         ) : (
-                            <Table
-                                columns={columns}
-                                dataSource={data.Page.activities.map((row, index) => ({
-                                    key: index,
-                                    Title: row.media.title.romaji,
-                                    Progress: row.progress,
-                                    Date: DateTime.fromSeconds(row.createdAt).toFormat('DDD t')
-                                }))}
-                                pagination={{pageSize: 50}}
+                            <Alert
+                                message="No AniList Account"
+                                description="Please go to settings and login with AniList to see your manga list."
+                                type="info"
+                                showIcon
                             />
                         )}
                     </div>
