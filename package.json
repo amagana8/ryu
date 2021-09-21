@@ -6,7 +6,7 @@
   },
   "description": "Manga reader with Anilist integration for Windows, Mac, and Linux.",
   "homepage": ".",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.3.19",

@@ -151,7 +151,7 @@ function MangaListTable(props) {
             width: 150,
             render: (text, record) => (
                 <div>
-                    <Select defaultValue={record.Score ? (record.Score) : ('-')} listHeight={320} onChange={handleUpdateScore(record)}>
+                    <Select defaultValue={(record.Score) || ('-')} listHeight={320} onChange={handleUpdateScore(record)}>
                         <Option value="0">-</Option>
                         <Option value="1">1</Option>
                         <Option value="2">2</Option>

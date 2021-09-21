@@ -35,13 +35,13 @@ const MangaPage = () => {
         })
         .then(res => {
             setLoading(false);
-            setState(res.data.results.map(row => ({
-                key: row.data.id,
-                Chapter: row.data.attributes.chapter,
-                Hash: row.data.attributes.hash,
-                Data: row.data.attributes.data,
-                Title: row.data.attributes.title,
-                ChapterId: row.data.id,
+            setState(res.data.data.map(row => ({
+                key: row.id,
+                Chapter: row.attributes.chapter,
+                Hash: row.attributes.hash,
+                Data: row.attributes.data,
+                Title: row.attributes.title,
+                ChapterId: row.id,
                 GroupId: row.relationships[0].id
             })));
         });

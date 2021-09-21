@@ -54,18 +54,18 @@ const Reader = () => {
                 mediaId: manga.anilistId
             }
         });
-        const chapters = sessionStorage.getItem("chapterData").split(',');
+        const pages = sessionStorage.getItem("chapterData").split(',');
         let images = [];
         let baseUrl = (await axios.get(`https://api.mangadex.org/at-home/server/${sessionStorage.getItem("chapterId")}`)).data.baseUrl;
-        for (const chapter of chapters) {
-            await axios.get(`${baseUrl}/data/${sessionStorage.getItem("chapterHash")}/${chapter}`).then(res => {
+        for (const page of pages) {
+            await axios.get(`${baseUrl}/data/${sessionStorage.getItem("chapterHash")}/${page}`).then(res => {
                 images.push(res);
+                setLoading(false);
+                setState(images.map(row => ({
+                    Url: row.config.url
+                })));
             });
         }
-        setLoading(false);
-        setState(images.map(row => ({
-            Url: row.config.url
-        })));
     }
     
     return(

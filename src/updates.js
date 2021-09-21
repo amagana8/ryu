@@ -30,10 +30,10 @@ const Updates = () => {
         });
 
         if (feed) {
-            const feedData = (feed.data.results.map((row, index) => ({
+            const feedData = (feed.data.data.map((row, index) => ({
                 key: index,
                 Manga: row.relationships.find(rel => rel.type==='manga').id,
-                Chapter: row.data.attributes.chapter
+                Chapter: row.attributes.chapter
             })));
             for (const chapter of feedData) {
                 await axios.get(`https://api.mangadex.org/manga/${chapter.Manga}`).then(res => {

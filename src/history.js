@@ -56,7 +56,7 @@ const History = () => {
                 <SideBar item='4'/>
                 <Content>
                     <div>
-                        {localStorage.getItem("userId") ? (
+                        {localStorage.getItem("UserId") ? (
                             <div>
                                 {loading ? (
                                     <Spin style={{display: 'grid', justifyContent: 'center'}} indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />

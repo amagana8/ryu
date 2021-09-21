@@ -20,10 +20,10 @@ const Browse = () => {
             params: {title: value}
         }).then(res => {
             setLoading(false);
-            setState(res.data.results.map(row => ({
-                Title: row.data.attributes.title.en,
-                Id: row.data.id,
-                CoverId: (row.relationships.find(rel => rel.type==='cover_art') ? row.relationships.find(rel => rel.type==='cover_art').id : null)
+            setState(res.data.data.map(row => ({
+                Title: row.attributes.title.en || row.attributes.title.jp,
+                Id: row.id,
+                CoverId: row.relationships.find(rel => rel.type==='cover_art').id || null
             })));
         }); 
     }
