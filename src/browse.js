@@ -17,13 +17,17 @@ const Browse = () => {
 
     const getData = async(value) => {
         await axios.get('https://api.mangadex.org/manga', {
-            params: {title: value}
+            params: {
+                'title': value,
+                'contentRating[]': 'safe',
+                'order[relevance]': 'desc'
+            }
         }).then(res => {
             setLoading(false);
             setState(res.data.data.map(row => ({
-                Title: row.attributes.title.en || row.attributes.title.jp,
+                Title: row.attributes.title.en || row.attributes.title.ja,
                 Id: row.id,
-                CoverId: row.relationships.find(rel => rel.type==='cover_art').id || null
+                CoverId: row.relationships.find(rel => rel.type==='cover_art') ? row.relationships.find(rel => rel.type==='cover_art').id : null
             })));
         }); 
     }

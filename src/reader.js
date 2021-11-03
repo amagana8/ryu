@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 import { useState, useEffect } from 'react';
-import { Layout, List, Spin } from 'antd';
+import { Layout, List, Spin, message } from 'antd';
 import { SideBar } from './components/SideBar';
 import { LoadingOutlined } from '@ant-design/icons';
 import { db } from './components/db';
@@ -48,12 +48,14 @@ const Reader = () => {
 
     const getData = async() => {
         const manga = await db.library.get(sessionStorage.getItem("mangaId"));
-        getMediaList({
-            variables: {
-                userId: localStorage.getItem("UserId"),
-                mediaId: manga.anilistId
-            }
-        });
+        if (manga) {
+            getMediaList({
+                variables: {
+                    userId: localStorage.getItem("UserId"),
+                    mediaId: manga.anilistId
+                }
+            });
+        }
         const pages = sessionStorage.getItem("chapterData").split(',');
         let images = [];
         let baseUrl = (await axios.get(`https://api.mangadex.org/at-home/server/${sessionStorage.getItem("chapterId")}`)).data.baseUrl;
@@ -64,6 +66,11 @@ const Reader = () => {
                 setState(images.map(row => ({
                     Url: row.config.url
                 })));
+            })
+            .catch(error => {
+                message.error('Chapter not available.');
+                setLoading(false);
+                console.log(error);
             });
         }
     }
