@@ -1,48 +1,42 @@
-@import '~antd/dist/antd.dark.css';
-
-:root {
-  --bg-primary: #141414;
-  --bg-secondary: #1d1d1d;
-}
-
 .App {
   text-align: center;
 }
 
-body {
-  background-color: var(--bg-primary);
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
 }
 
-.card-container > .ant-tabs-card .ant-tabs-content {
-  margin-top: -16px;
-}
-.card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
-  background: var(--bg-primary);
-}
-.card-container > .ant-tabs-card > .ant-tabs-nav::before {
-  display: none;
-}
-.card-container > .ant-tabs-card .ant-tabs-tab {
-  background: transparent;
-  border-color: transparent;
-}
-.card-container > .ant-tabs-card .ant-tabs-tab-active {
-  background: var(--bg-primary);
-  border-color: var(--bg-primary);
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
 }
 
-.ant-card-body {
-  background: var(--bg-secondary);
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 
-body::-webkit-scrollbar {
-  width: 0.25rem;
+.App-link {
+  color: #61dafb;
 }
 
-body::-webkit-scrollbar-track {
-  background: #1e1e24;
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-body::-webkit-scrollbar-thumb {
-  background: #177ddc;
+button {
+  font-size: calc(10px + 2vmin);
 }
