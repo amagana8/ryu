@@ -1,5 +1,5 @@
 export enum Status {
-  Reading = 'READING',
+  Current = 'CURRENT',
   Completed = 'COMPLETED',
   Paused = 'PAUSED',
   Dropped = 'DROPPED',

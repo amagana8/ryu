@@ -1,6 +1,25 @@
-@import "antd/dist/antd.dark.css";
-@import "./colors.scss";
+@import 'antd/dist/antd.dark.css';
+@import './colors.scss';
 
 body {
   background-color: $bg-primary;
+  &::-webkit-scrollbar {
+    width: 0.25rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $bg-secondary;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $blue;
+  }
+}
+
+.sideBar {
+  background-color: $bg-primary;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  left: 0;
 }

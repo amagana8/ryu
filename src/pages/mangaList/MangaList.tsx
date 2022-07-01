@@ -6,8 +6,8 @@ const { TabPane } = Tabs;
 
 const MangaList = () => (
   <Tabs type="card">
-    <TabPane tab="Reading" key={Status.Reading}>
-      <MangaTable status={Status.Reading} />
+    <TabPane tab="Reading" key={Status.Current}>
+      <MangaTable status={Status.Current} />
     </TabPane>
     <TabPane tab="Completed" key={Status.Completed}>
       <MangaTable status={Status.Completed} />

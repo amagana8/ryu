@@ -8,13 +8,15 @@ import {
   InputNumber,
   Space,
   Form,
-  Spin,
   Alert,
 } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
 import { GetList } from '@graphql/queries';
 import { UpdateProgress, UpdateScore, UpdateStatus } from '@graphql/mutations';
 import { Status } from '@utils/enums';
+import { useContext } from 'react';
+import { UserContext } from '@contexts/UserContext';
+import styles from './MangaTable.module.scss';
+import { LoadingSpinner } from '@components/loadingSpinner/LoadingSpinner';
 
 const { Option } = Select;
 
@@ -23,9 +25,11 @@ interface mangaTableProps {
 }
 
 function MangaTable({ status }: mangaTableProps) {
+  const { user } = useContext(UserContext);
+
   const { loading, error, data } = useQuery(GetList, {
     variables: {
-      userName: localStorage.getItem('username'),
+      userId: user.anilistId,
       status,
     },
   });
@@ -83,7 +87,7 @@ function MangaTable({ status }: mangaTableProps) {
       dataIndex: ['Progress', 'Chapters'],
       width: 150,
       render: (text: any, record: any) => (
-        <div style={{ whiteSpace: 'pre' }}>
+        <div className={styles.progress}>
           <Popover
             title="Progress"
             trigger="click"
@@ -102,11 +106,11 @@ function MangaTable({ status }: mangaTableProps) {
                         defaultValue={status}
                         onChange={handleUpdateStatus(record)}
                       >
-                        <Option value="CURRENT">Reading</Option>
-                        <Option value="COMPLETED">Completed</Option>
-                        <Option value="PAUSED">Paused</Option>
-                        <Option value="DROPPED">Dropped</Option>
-                        <Option value="PLANNING">Planning</Option>
+                        <Option value={Status.Current}>Reading</Option>
+                        <Option value={Status.Completed}>Completed</Option>
+                        <Option value={Status.Paused}>Paused</Option>
+                        <Option value={Status.Dropped}>Dropped</Option>
+                        <Option value={Status.Planning}>Planning</Option>
                       </Select>
                     </Form.Item>
                   </Space>
@@ -123,7 +127,7 @@ function MangaTable({ status }: mangaTableProps) {
           <Button
             type="link"
             onClick={() => handleIncrementProgress(record)}
-            icon={<PlusOutlined style={{ fontSize: 'small' }} />}
+            icon={<PlusOutlined className={styles.plus} />}
           />
         </div>
       ),
@@ -133,30 +137,22 @@ function MangaTable({ status }: mangaTableProps) {
       dataIndex: 'Score',
       width: 150,
       render: (text: any, record: any) => (
-        <div>
-          <Select
-            defaultValue={record.Score || '-'}
-            listHeight={320}
-            onChange={handleUpdateScore(record)}
-          >
-            <Option value="0">-</Option>
-            <Option value="1">1</Option>
-            <Option value="2">2</Option>
-            <Option value="3">3</Option>
-            <Option value="4">4</Option>
-            <Option value="5">5</Option>
-            <Option value="6">6</Option>
-            <Option value="7">7</Option>
-            <Option value="8">8</Option>
-            <Option value="9">9</Option>
-            <Option value="10">10</Option>
-          </Select>
-        </div>
+        <Select
+          defaultValue={record.Score || '-'}
+          listHeight={320}
+          onChange={handleUpdateScore(record)}
+        >
+          {[...Array(11).keys()].map((num) => (
+            <Option value={num} key={num}>
+              {num === 0 ? '-' : num}
+            </Option>
+          ))}
+        </Select>
       ),
     },
   ];
 
-  if (!localStorage.getItem('username')) {
+  if (!user.anilistId) {
     return (
       <Alert
         message="No AniList Account"
@@ -168,12 +164,7 @@ function MangaTable({ status }: mangaTableProps) {
   }
 
   if (loading) {
-    return (
-      <Spin
-        style={{ display: 'grid', justifyContent: 'center' }}
-        indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
-      />
-    );
+    return <LoadingSpinner />;
   }
 
   if (error) {
@@ -188,24 +179,23 @@ function MangaTable({ status }: mangaTableProps) {
   }
 
   return (
-    <div>
-      <Table
-        columns={columns}
-        dataSource={
-          data.MediaListCollection.lists[0]
-            ? data.MediaListCollection.lists[0].entries.map((row: any) => ({
-                key: row.id,
-                Title: row.media.title.romaji,
-                Chapters: row.media.chapters,
-                Progress: row.progress,
-                Score: row.score,
-                Id: row.id,
-              }))
-            : []
-        }
-        pagination={{ pageSize: 50 }}
-      />
-    </div>
+    <Table
+      className={styles.table}
+      columns={columns}
+      dataSource={
+        data.MediaListCollection.lists[0]
+          ? data.MediaListCollection.lists[0].entries.map((row: any) => ({
+              key: row.id,
+              Title: row.media.title.romaji,
+              Chapters: row.media.chapters,
+              Progress: row.progress,
+              Score: row.score,
+              Id: row.id,
+            }))
+          : []
+      }
+      pagination={{ pageSize: 50 }}
+    />
   );
 }
 

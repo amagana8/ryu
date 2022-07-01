@@ -1,9 +1,9 @@
 import { gql } from '@apollo/client';
 
 export const GetList = gql`
-  query ($userName: String, $status: MediaListStatus) {
+  query ($userId: Int, $status: MediaListStatus) {
     MediaListCollection(
-      userName: $userName
+      userId: $userId
       type: MANGA
       sort: UPDATED_TIME_DESC
       status: $status

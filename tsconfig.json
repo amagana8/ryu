@@ -19,6 +19,7 @@
     "paths": {
       "@pages/*": ["pages/*"],
       "@components/*": ["components/*"],
+      "@contexts/*": ["contexts/*"],
       "@graphql/*": ["graphql/*"],
       "@utils/*": ["utils/*"]
     },
