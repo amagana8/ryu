@@ -11,6 +11,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Library } from '@pages/library/Library';
 import { Search } from '@pages/search/Search';
 import { MangaPage } from '@pages/mangaPage/MangaPage';
+import { History } from '@pages/history/History';
 
 const { Sider, Content } = Layout;
 
@@ -83,6 +84,7 @@ function App() {
                 <Route path="/mangaList" element={<MangaList />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/mangaPage" element={<MangaPage />} />
+                <Route path="/history" element={<History />} />
                 <Route path="/settings" element={<Settings />} />
               </Routes>
             </Content>

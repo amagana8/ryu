@@ -45,3 +45,21 @@ export const GetSearch = gql`
     }
   }
 `;
+
+export const GetHistory = gql`
+  query ($userId: Int) {
+    Page {
+      activities(userId: $userId, type_in: MANGA_LIST, sort: ID_DESC) {
+        ... on ListActivity {
+          progress
+          createdAt
+          media {
+            title {
+              romaji
+            }
+          }
+        }
+      }
+    }
+  }
+`;
