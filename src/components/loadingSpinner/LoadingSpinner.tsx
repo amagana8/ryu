@@ -3,7 +3,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import styles from './LoadingSpinner.module.scss';
 
 const LoadingSpinner = () => (
-    <Spin
+  <Spin
     className={styles.spinner}
     indicator={<LoadingOutlined className={styles.circle} spin />}
   />

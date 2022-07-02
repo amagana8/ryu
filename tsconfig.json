@@ -22,7 +22,7 @@
       "@contexts/*": ["contexts/*"],
       "@graphql/*": ["graphql/*"],
       "@utils/*": ["utils/*"]
-    },
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

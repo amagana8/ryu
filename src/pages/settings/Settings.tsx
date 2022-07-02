@@ -108,11 +108,7 @@ const Settings = () => {
       <Title level={2} className={styles.title}>
         Connect with MangaDex
       </Title>
-      <Form
-        {...layout}
-        onFinish={mdOnFinish}
-        className={styles.form}
-      >
+      <Form {...layout} onFinish={mdOnFinish} className={styles.form}>
         <Form.Item
           label="Username"
           name="username"
@@ -133,28 +129,30 @@ const Settings = () => {
           </Button>
         </Form.Item>
       </Form>
-      <Title level={2} className={styles.title}>External Links</Title>
+      <Title level={2} className={styles.title}>
+        External Links
+      </Title>
       <div className={styles.button}>
-      <Space>
-        <Button
-          type="primary"
-          href="https://github.com/amagana8/ryu"
-          target="_blank"
-          icon={<GithubFilled />}
-          className={styles.github}
-        >
-          Github
-        </Button>
-        <Button
-          type="primary"
-          href="https://ko-fi.com/amagana8"
-          target="_blank"
-          icon={<HeartFilled />}
-          className={styles.kofi}
-        >
-          Support Me
-        </Button>
-      </Space>
+        <Space>
+          <Button
+            type="primary"
+            href="https://github.com/amagana8/ryu"
+            target="_blank"
+            icon={<GithubFilled />}
+            className={styles.github}
+          >
+            Github
+          </Button>
+          <Button
+            type="primary"
+            href="https://ko-fi.com/amagana8"
+            target="_blank"
+            icon={<HeartFilled />}
+            className={styles.kofi}
+          >
+            Support Me
+          </Button>
+        </Space>
       </div>
     </>
   );
