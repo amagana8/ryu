@@ -79,12 +79,12 @@ function MangaTable({ status }: mangaTableProps) {
   const columns = [
     {
       title: 'Title',
-      dataIndex: 'Title',
+      dataIndex: 'title',
       width: 200,
     },
     {
       title: 'Progress',
-      dataIndex: ['Progress', 'Chapters'],
+      dataIndex: ['progress', 'chapters'],
       width: 150,
       render: (text: any, record: any) => (
         <div className={styles.progress}>
@@ -92,30 +92,28 @@ function MangaTable({ status }: mangaTableProps) {
             title="Progress"
             trigger="click"
             content={
-              <div>
-                <Form>
-                  <Space direction="vertical">
-                    <Form.Item label="Chapters">
-                      <InputNumber
-                        defaultValue={record['Progress']}
-                        onChange={handleupdateProgress(record)}
-                      />
-                    </Form.Item>
-                    <Form.Item label="Status">
-                      <Select
-                        defaultValue={status}
-                        onChange={handleUpdateStatus(record)}
-                      >
-                        <Option value={Status.Current}>Reading</Option>
-                        <Option value={Status.Completed}>Completed</Option>
-                        <Option value={Status.Paused}>Paused</Option>
-                        <Option value={Status.Dropped}>Dropped</Option>
-                        <Option value={Status.Planning}>Planning</Option>
-                      </Select>
-                    </Form.Item>
-                  </Space>
-                </Form>
-              </div>
+              <Form>
+                <Space direction="vertical">
+                  <Form.Item label="Chapters">
+                    <InputNumber
+                      defaultValue={record['Progress']}
+                      onChange={handleupdateProgress(record)}
+                    />
+                  </Form.Item>
+                  <Form.Item label="Status">
+                    <Select
+                      defaultValue={status}
+                      onChange={handleUpdateStatus(record)}
+                    >
+                      <Option value={Status.Current}>Reading</Option>
+                      <Option value={Status.Completed}>Completed</Option>
+                      <Option value={Status.Paused}>Paused</Option>
+                      <Option value={Status.Dropped}>Dropped</Option>
+                      <Option value={Status.Planning}>Planning</Option>
+                    </Select>
+                  </Form.Item>
+                </Space>
+              </Form>
             }
           >
             <Button type="text">
@@ -134,7 +132,7 @@ function MangaTable({ status }: mangaTableProps) {
     },
     {
       title: 'Score',
-      dataIndex: 'Score',
+      dataIndex: 'score',
       width: 150,
       render: (text: any, record: any) => (
         <Select
@@ -186,11 +184,11 @@ function MangaTable({ status }: mangaTableProps) {
         data.MediaListCollection.lists[0]
           ? data.MediaListCollection.lists[0].entries.map((row: any) => ({
               key: row.id,
-              Title: row.media.title.romaji,
-              Chapters: row.media.chapters,
-              Progress: row.progress,
-              Score: row.score,
-              Id: row.id,
+              title: row.media.title.romaji,
+              chapters: row.media.chapters,
+              progress: row.progress,
+              score: row.score,
+              id: row.id,
             }))
           : []
       }

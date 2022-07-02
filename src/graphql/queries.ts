@@ -25,3 +25,23 @@ export const GetList = gql`
     }
   }
 `;
+
+export const GetSearch = gql`
+  query ($search: String) {
+    Page {
+      media(type: MANGA, search: $search) {
+        id
+        title {
+          romaji
+        }
+        startDate {
+          year
+        }
+        description
+        coverImage {
+          medium
+        }
+      }
+    }
+  }
+`;

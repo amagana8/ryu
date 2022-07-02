@@ -9,6 +9,8 @@ import { defaultUser, UserContext } from 'contexts/UserContext';
 import { SideBar } from '@components/sideBar/SideBar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Library } from '@pages/library/Library';
+import { Search } from '@pages/search/Search';
+import { MangaPage } from '@pages/mangaPage/MangaPage';
 
 const { Sider, Content } = Layout;
 
@@ -79,6 +81,8 @@ function App() {
               <Routes>
                 <Route path="/" element={<Library />} />
                 <Route path="/mangaList" element={<MangaList />} />
+                <Route path="/search" element={<Search />} />
+                <Route path="/mangaPage" element={<MangaPage />} />
                 <Route path="/settings" element={<Settings />} />
               </Routes>
             </Content>
