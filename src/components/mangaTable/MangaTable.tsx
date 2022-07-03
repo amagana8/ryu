@@ -96,7 +96,7 @@ function MangaTable({ status }: mangaTableProps) {
                 <Space direction="vertical">
                   <Form.Item label="Chapters">
                     <InputNumber
-                      defaultValue={record['Progress']}
+                      defaultValue={record.progress}
                       onChange={handleupdateProgress(record)}
                     />
                   </Form.Item>
@@ -117,9 +117,9 @@ function MangaTable({ status }: mangaTableProps) {
             }
           >
             <Button type="text">
-              {record.Chapters
-                ? `${record['Progress']}/${record['Chapters']}`.padEnd(7)
-                : `${record['Progress']}`.padEnd(7)}
+              {record.chapters
+                ? `${record.progress}/${record.chapters}`.padEnd(7)
+                : `${record.progress}`.padEnd(7)}
             </Button>
           </Popover>
           <Button

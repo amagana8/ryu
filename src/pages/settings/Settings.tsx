@@ -57,7 +57,7 @@ const Settings = () => {
         .json()) as any;
       setUser((prevState) => ({
         ...prevState,
-        mangadexToken: res.data.token.session,
+        mangadexToken: res.token.session,
       }));
       message.success('Login successful!');
     } catch (error) {

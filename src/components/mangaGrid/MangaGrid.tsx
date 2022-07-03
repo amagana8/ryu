@@ -73,7 +73,7 @@ const MangaGrid = ({ mangas }: MangaGridProps) => {
                     <img style={{ height: 360 }} src={item.cover} alt="" />
                   }
                 >
-                  <Meta title={item.title} />
+                  <Meta description={item.title} />
                 </Card>
               </List.Item>
             </Button>
