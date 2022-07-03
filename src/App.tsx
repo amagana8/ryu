@@ -4,7 +4,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { MangaList } from '@pages/mangaList/MangaList';
 import { Settings } from '@pages/settings/Settings';
 import { useEffect, useMemo, useState } from 'react';
-import { userStore } from 'userStore';
+import { getStoredUser, loadStore, updateUser } from '@services/userStore';
 import { defaultUser, UserContext } from 'contexts/UserContext';
 import { SideBar } from '@components/sideBar/SideBar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -23,31 +23,22 @@ function App() {
   // load data from store on startup
   useEffect(() => {
     const getUser = async () => {
-      const anilistId = (await userStore.get('anilistId')) as string;
-      const anilistToken = (await userStore.get('anilistToken')) as string;
-      const mangadexToken = (await userStore.get('mangadexToken')) as string;
-
-      setUser({
-        anilistId,
-        anilistToken,
-        mangadexToken,
-      });
+      const storedUser = await getStoredUser();
+      setUser(storedUser);
     };
-    const loadDb = async () => {
+    const loadStorage = async () => {
+      await loadStore();
       await conenct();
-    }
-    loadDb();
+    };
+    loadStorage();
     getUser();
   }, []);
 
   // keep store in sync with context
   useEffect(() => {
-    const updateStore = async () => {
-      await userStore.set('anilistId', user.anilistId);
-      await userStore.set('anilistToken', user.anilistToken);
-      await userStore.set('mangadexToken', user.mangadexToken);
-    };
-    updateStore();
+    if (user !== defaultUser) {
+      updateUser(user);
+    }
   }, [user]);
 
   // update apollo client whenver token changes

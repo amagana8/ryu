@@ -1,6 +1,6 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
 
-interface User {
+export interface User {
   anilistId: string;
   anilistToken: string;
   mangadexToken: string;
