@@ -1,33 +1,34 @@
 import ky from 'ky';
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Button, Table, Typography, Space, Divider, Spin } from 'antd';
-// import { db } from './components/db';
-// import { AniListModal } from './components/aniListModal';
-import { HeartOutlined, HeartFilled, LoadingOutlined } from '@ant-design/icons';
+import { Button, Table, Typography, Space, Divider } from 'antd';
+import { get, add, remove } from '@services/db';
 import { AniListModal } from '@components/anilistModal/AniListModal';
+import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { LoadingSpinner } from '@components/loadingSpinner/LoadingSpinner';
+import { Manga } from '@models/Manga';
 
 const { Title } = Typography;
 
 const MangaPage = () => {
   const [chapters, setChapters] = useState([]);
-  const [favorited, setFavorite] = useState(false);
+  const [favorited, setFavorited] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  const { mangaId, mangaTitle, coverId } = useLocation().state as any;
+  const currentManga = useLocation().state as Manga;
 
   useEffect(() => {
     const getData = async () => {
-      // if (await db.library.get({ id: sessionStorage.getItem('mangaId') })) {
-      //   setFavorite(true);
-      // } else {
-      //   setFavorite(false);
-      // }
+      const libEntry = (await get(currentManga.mangadexId)) as any;
+      if (libEntry.length) {
+        setFavorited(true);
+      } else {
+        setFavorited(false);
+      }
       setLoading(true);
       const response = (await ky
-        .get(`https://api.mangadex.org/manga/${mangaId}/feed`, {
+        .get(`https://api.mangadex.org/manga/${currentManga.mangadexId}/feed`, {
           searchParams: {
             'translatedLanguage[]': 'en',
             'order[chapter]': 'desc',
@@ -63,17 +64,13 @@ const MangaPage = () => {
   }
 
   async function addtoLibrary() {
-    // await db.library.add({
-    //   id: sessionStorage.getItem('mangaId'),
-    //   title: sessionStorage.getItem('mangaTitle'),
-    //   coverId: sessionStorage.getItem('coverId'),
-    // });
-    setFavorite(true);
+    await add(currentManga);
+    setFavorited(true);
   }
 
   async function removeFromLibrary() {
-    // await db.library.delete(sessionStorage.getItem('mangaId'));
-    setFavorite(false);
+    await remove(currentManga.mangadexId);
+    setFavorited(false);
   }
 
   const columns = [
@@ -97,7 +94,7 @@ const MangaPage = () => {
   return (
     <>
       <Space split={<Divider type="vertical" />}>
-        <Title>{mangaTitle}</Title>
+        <Title>{currentManga.title}</Title>
         {favorited ? (
           <Button
             type="text"
@@ -111,7 +108,7 @@ const MangaPage = () => {
             onClick={() => addtoLibrary()}
           />
         )}
-        <AniListModal />
+        <AniListModal manga={currentManga} />
       </Space>
       {loading ? (
         <LoadingSpinner />

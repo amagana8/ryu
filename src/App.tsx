@@ -12,6 +12,7 @@ import { Library } from '@pages/library/Library';
 import { Search } from '@pages/search/Search';
 import { MangaPage } from '@pages/mangaPage/MangaPage';
 import { History } from '@pages/history/History';
+import { conenct } from '@services/db';
 
 const { Sider, Content } = Layout;
 
@@ -32,7 +33,10 @@ function App() {
         mangadexToken,
       });
     };
-
+    const loadDb = async () => {
+      await conenct();
+    }
+    loadDb();
     getUser();
   }, []);
 

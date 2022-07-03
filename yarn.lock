@@ -356,6 +356,13 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
+"@tauri-apps/api@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/api/-/api-1.0.0.tgz#944b1faf1cf3f916b4ff5a23b6a49a83d7b60003"
+  integrity sha512-sPnq8/WQumCnyHERTeqKQiryRoM8X4ImMT7K+BJ3zT7bmp/n5162fZS/ZqYIFxKHgQqzwWqT7C96Sb0/CL7WsA==
+  dependencies:
+    type-fest "2.13.1"
+
 "@tauri-apps/api@1.0.1", "@tauri-apps/api@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@tauri-apps/api/-/api-1.0.1.tgz#f516cf3b83139312141123c08f1d75260274da50"
@@ -1586,6 +1593,13 @@ symbol-observable@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-4.0.0.tgz#5b425f192279e87f2f9b937ac8540d1984b39205"
   integrity sha512-b19dMThMV4HVFynSAM1++gBHAbk2Tc/osgLIBZMKsyqh34jb2e8Os7T6ZW/Bt3pJFdBTd2JwAnAAEQV7rSNvcQ==
+
+"tauri-plugin-sql-api@github:tauri-apps/tauri-plugin-sql":
+  version "0.1.0"
+  resolved "https://codeload.github.com/tauri-apps/tauri-plugin-sql/tar.gz/f5921d026444c1801ae78e8b69508a0e18933ca3"
+  dependencies:
+    "@tauri-apps/api" "1.0.0"
+    tslib "2.4.0"
 
 "tauri-plugin-store-api@github:tauri-apps/tauri-plugin-store":
   version "0.1.0"

@@ -21,6 +21,8 @@
       "@components/*": ["components/*"],
       "@contexts/*": ["contexts/*"],
       "@graphql/*": ["graphql/*"],
+      "@services/*": ["services/*"],
+      "@models/*": ["models/*"],
       "@utils/*": ["utils/*"]
     }
   },

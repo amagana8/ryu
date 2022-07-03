@@ -1,33 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Input, List, Modal, Button } from 'antd';
 import { useLazyQuery } from '@apollo/client';
 import { CheckOutlined } from '@ant-design/icons';
 import { GetSearch } from '@graphql/queries';
 import { LoadingSpinner } from '@components/loadingSpinner/LoadingSpinner';
 import styles from './AniListModal.module.scss';
-
-// import { db } from './db';
+import { update } from '@services/db';
+import { Manga } from '@models/Manga';
 
 const { Search } = Input;
 
-const AniListModal = () => {
-  const [linked, setLinked] = useState(false);
+interface AniListModalProps {
+  manga: Manga;
+}
+
+const AniListModal = ({ manga }: AniListModalProps) => {
+  const [linked, setLinked] = useState(!!manga.anilistId);
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  useEffect(() => {
-    checkLinked();
-  }, []);
-
-  const checkLinked = async () => {
-    // const manga = await db.library.get({
-    //   id: sessionStorage.getItem('mangaId'),
-    // });
-    // if (manga && manga.anilistId) {
-    //   setLinked(true);
-    // } else {
-    //   setLinked(false);
-    // }
-  };
 
   const onSearch = (input: any) => {
     getSearch({
@@ -48,17 +37,19 @@ const AniListModal = () => {
   const [getSearch, { loading, data }] = useLazyQuery(GetSearch);
 
   const handleClick = async (item: any) => {
-    // if (await db.library.get({ id: sessionStorage.getItem('mangaId') })) {
-    //   db.library.update(sessionStorage.getItem('mangaId'), {
-    //     anilistId: item.id,
-    //   });
-    // }
+    await update({
+      ...manga,
+      anilistId: item.id,
+    });
     setLinked(true);
     setIsModalVisible(false);
   };
 
   const deleteLink = async () => {
-    // db.library.update(sessionStorage.getItem('mangaId'), { anilistId: null });
+    await update({
+      ...manga,
+      anilistId: null,
+    });
     setLinked(false);
     setIsModalVisible(false);
   };

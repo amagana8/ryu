@@ -24,7 +24,7 @@ const MangaGrid = ({ mangas }: MangaGridProps) => {
           const response = (await ky
             .get(`https://api.mangadex.org/cover/${manga.coverId}`)
             .json()) as any;
-          manga.cover = `https://uploads.mangadex.org/covers/${manga.id}/${response.data.attributes.fileName}`;
+          manga.cover = `https://uploads.mangadex.org/covers/${manga.mangadexId}/${response.data.attributes.fileName}`;
         } else {
           manga.cover = '#';
         }
@@ -38,9 +38,9 @@ const MangaGrid = ({ mangas }: MangaGridProps) => {
   function handleClick(record: any) {
     navigate('/mangaPage', {
       state: {
-        mangaId: record.id,
-        mangaTitle: record.title,
+        mangadexId: record.mangadexId,
         coverId: record.coverId,
+        title: record.title,
       },
     });
   }

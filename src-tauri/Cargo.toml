@@ -23,6 +23,11 @@ tauri = { version = "1.0.0", features = ["api-all"] }
 git = "https://github.com/tauri-apps/tauri-plugin-store"
 #branch = "main"
 
+[dependencies.tauri-plugin-sql]
+git = "https://github.com/tauri-apps/tauri-plugin-sql"
+features = ["sqlite"]
+#branch = "main"
+
 [features]
 # by default Tauri runs in production mode
 # when `tauri dev` runs it is executed with `cargo run --no-default-features` if `devPath` is an URL

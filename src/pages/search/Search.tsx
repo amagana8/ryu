@@ -25,7 +25,7 @@ const Search = () => {
     setManga(
       response.data.map((row: any) => ({
         title: row.attributes.title.en || row.attributes.title.ja,
-        id: row.id,
+        mangadexId: row.id,
         coverId: row.relationships.find((rel: any) => rel.type === 'cover_art')
           ? row.relationships.find((rel: any) => rel.type === 'cover_art').id
           : null,
