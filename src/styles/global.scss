@@ -1,0 +1,37 @@
+@import 'antd/dist/antd.dark.css';
+@import './colors.scss';
+
+body {
+  &::-webkit-scrollbar {
+    width: 0.25rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $bg-secondary;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $blue;
+  }
+}
+
+.ant-layout-content {
+  background-color: $bg-primary;
+}
+
+.ant-card-body {
+  background: $bg-secondary;
+  height: 5rem;
+}
+
+.ant-card-meta-description {
+  color: white;
+}
+
+.sideBar {
+  background-color: $bg-primary;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  left: 0;
+}
