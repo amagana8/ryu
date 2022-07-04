@@ -1,14 +1,20 @@
 import { fetch } from '@tauri-apps/api/http';
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Button, Table, Typography, Space, Divider } from 'antd';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Button, List, Typography, Space, Divider } from 'antd';
 import { get, add, remove } from '@services/db';
 import { AniListModal } from '@components/anilistModal/AniListModal';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { LoadingSpinner } from '@components/loadingSpinner/LoadingSpinner';
 import { Manga } from '@models/Manga';
+import styles from './MangaPage.module.scss';
 
 const { Title } = Typography;
+
+interface ChapterLinkProps {
+  chapter: any;
+  children: JSX.Element;
+}
 
 const MangaPage = () => {
   const [chapters, setChapters] = useState([]);
@@ -41,8 +47,7 @@ const MangaPage = () => {
       setLoading(false);
       setChapters(
         feedData.data.map((row: any) => ({
-          key: row.id,
-          chapter: row.attributes.chapter,
+          num: row.attributes.chapter,
           title: row.attributes.title,
           chapterId: row.id,
           groupId: row.relationships[0].id,
@@ -51,16 +56,6 @@ const MangaPage = () => {
     };
     getData();
   }, []);
-
-  function handleClick(record: any) {
-    navigate('/reader', {
-      state: {
-        chapterId: record.chapterId,
-        chapterNum: record.chapter,
-        mangaId: currentManga.mangadexId,
-      },
-    });
-  }
 
   async function addtoLibrary() {
     await add(currentManga);
@@ -72,23 +67,18 @@ const MangaPage = () => {
     setFavorited(false);
   }
 
-  const columns = [
-    {
-      title: 'Chapter',
-      dataIndex: 'chapter',
-      width: 25,
-    },
-    {
-      title: 'Title',
-      dataIndex: 'title',
-      width: 150,
-      render: (text: any, record: any) => (
-        <Button type="link" onClick={() => handleClick(record)}>
-          {text}
-        </Button>
-      ),
-    },
-  ];
+  const ChapterLink = ({ chapter, children }: ChapterLinkProps) => (
+    <Link
+      to="/reader"
+      state={{
+        chapterId: chapter.chapterId,
+        chapterNum: chapter.num,
+        mangaId: currentManga.mangadexId,
+      }}
+    >
+      {children}
+    </Link>
+  );
 
   return (
     <>
@@ -112,9 +102,21 @@ const MangaPage = () => {
       {loading ? (
         <LoadingSpinner />
       ) : (
-        <Table
-          columns={columns}
+        <List
+          className={styles.list}
           dataSource={chapters}
+          renderItem={(chapter: any) => (
+            <List.Item>
+              <List.Item.Meta
+                title={
+                  <ChapterLink chapter={chapter}>{chapter.num}</ChapterLink>
+                }
+                description={
+                  <ChapterLink chapter={chapter}>{chapter.title}</ChapterLink>
+                }
+              />
+            </List.Item>
+          )}
           pagination={{ pageSize: 50 }}
         />
       )}
