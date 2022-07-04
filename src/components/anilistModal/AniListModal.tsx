@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Input, List, Modal, Button } from 'antd';
+import { Input, List, Modal, Button, Image } from 'antd';
 import { useLazyQuery } from '@apollo/client';
 import { CheckOutlined } from '@ant-design/icons';
 import { GetSearch } from '@graphql/queries';
@@ -84,7 +84,14 @@ const AniListModal = ({ manga }: AniListModalProps) => {
             renderItem={(item: any) => (
               <List.Item
                 onClick={() => handleClick(item)}
-                extra={<img src={item.coverImage.medium} alt="" />}
+                extra={
+                  <Image
+                    src={item.coverImage.medium ?? 'error'}
+                    alt={`${item.title} Cover`}
+                    fallback="https://i.imgur.com/fac0ifd.png"
+                    preview={false}
+                  />
+                }
               >
                 <List.Item.Meta
                   title={

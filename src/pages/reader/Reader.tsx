@@ -1,12 +1,13 @@
 import { fetch, ResponseType } from '@tauri-apps/api/http';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { useState, useEffect } from 'react';
-import { List, message } from 'antd';
+import { List, message, Image } from 'antd';
 import { get } from '@services/db';
 import { LoadingSpinner } from '@components/loadingSpinner/LoadingSpinner';
 import { UpdateProgress } from '@graphql/mutations';
 import { GetMediaList } from '@graphql/queries';
 import { useLocation } from 'react-router-dom';
+import styles from './Reader.module.scss';
 
 const Reader = () => {
   const [pages, setPages] = useState<any>([]);
@@ -78,17 +79,16 @@ const Reader = () => {
           itemLayout="vertical"
           size="large"
           dataSource={pages}
-          renderItem={(page: any) => (
+          renderItem={(page: any, index: number) => (
             <List.Item>
-              <img
-                style={{
-                  display: 'block',
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                }}
-                src={page.url}
-                alt=""
-              />
+              <div className={styles.page}>
+                <Image
+                  src={page.url ?? 'error'}
+                  alt={`Page ${index + 1}`}
+                  preview={false}
+                  fallback="https://i.imgur.com/fac0ifd.png"
+                />
+              </div>
             </List.Item>
           )}
         ></List>

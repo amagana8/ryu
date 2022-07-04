@@ -1,6 +1,6 @@
 import { fetch } from '@tauri-apps/api/http';
 import { useState, useEffect } from 'react';
-import { List, Card, Button } from 'antd';
+import { List, Card, Button, Image } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { LoadingSpinner } from '@components/loadingSpinner/LoadingSpinner';
 import styles from './MangaGrid.module.scss';
@@ -64,20 +64,25 @@ const MangaGrid = ({ mangas }: MangaGridProps) => {
           className={styles.list}
           dataSource={list}
           renderItem={(item) => (
-            <Button type="text" onClick={() => handleClick(item)}>
-              <List.Item>
+              <List.Item onClick={() => handleClick(item)}>
                 <Card
                   loading={loading}
                   hoverable
                   style={{ width: 240 }}
                   cover={
-                    <img style={{ height: 360 }} src={item.cover} alt="" />
+                    <Image
+                      height={360}
+                      width={240}
+                      preview={false}
+                      src={item.cover ?? 'error'}
+                      alt={`${item.title} Cover`}
+                      fallback="https://i.imgur.com/fac0ifd.png"
+                    />
                   }
                 >
                   <Meta description={item.title} />
                 </Card>
               </List.Item>
-            </Button>
           )}
         />
       )}
