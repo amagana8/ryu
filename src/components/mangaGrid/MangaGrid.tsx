@@ -1,4 +1,4 @@
-import ky from 'ky';
+import { fetch } from '@tauri-apps/api/http';
 import { useState, useEffect } from 'react';
 import { List, Card, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -21,10 +21,11 @@ const MangaGrid = ({ mangas }: MangaGridProps) => {
       setLoading(true);
       for (const manga of mangas) {
         if (manga.coverId) {
-          const response = (await ky
-            .get(`https://api.mangadex.org/cover/${manga.coverId}`)
-            .json()) as any;
-          manga.cover = `https://uploads.mangadex.org/covers/${manga.mangadexId}/${response.data.attributes.fileName}`;
+          const { data: mangaData } = await fetch<any>(
+            `https://api.mangadex.org/cover/${manga.coverId}`,
+            { method: 'GET' },
+          );
+          manga.cover = `https://uploads.mangadex.org/covers/${manga.mangadexId}/${mangaData.data.attributes.fileName}`;
         } else {
           manga.cover = '#';
         }

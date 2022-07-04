@@ -1,4 +1,4 @@
-import ky from 'ky';
+import { fetch } from '@tauri-apps/api/http';
 import { useState } from 'react';
 import { Input } from 'antd';
 import { MangaGrid } from '@components/mangaGrid/MangaGrid';
@@ -11,19 +11,21 @@ const Search = () => {
 
   const getData = async (value: any) => {
     setLoading(true);
-    const response = (await ky
-      .get('https://api.mangadex.org/manga', {
-        searchParams: {
+    const { data: mangaData } = await fetch<any>(
+      'https://api.mangadex.org/manga',
+      {
+        method: 'GET',
+        query: {
           title: value,
           'contentRating[]': 'safe',
           'order[relevance]': 'desc',
         },
-      })
-      .json()) as any;
+      },
+    );
 
     setLoading(false);
     setManga(
-      response.data.map((row: any) => ({
+      mangaData.data.map((row: any) => ({
         title: row.attributes.title.en || row.attributes.title.ja,
         mangadexId: row.id,
         coverId: row.relationships.find((rel: any) => rel.type === 'cover_art')

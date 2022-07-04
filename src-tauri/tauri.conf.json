@@ -12,7 +12,12 @@
   },
   "tauri": {
     "allowlist": {
-      "all": true
+      "all": true,
+      "http": {
+        "all": false,
+        "request": false,
+        "scope": ["https://api.mangadex.org/*", "https://uploads.mangadex.org/*"]
+      }
     },
     "bundle": {
       "active": true,

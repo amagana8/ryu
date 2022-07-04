@@ -1,4 +1,4 @@
-import ky from 'ky';
+import { fetch } from '@tauri-apps/api/http';
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table, Typography, Space, Divider } from 'antd';
@@ -27,18 +27,20 @@ const MangaPage = () => {
         setFavorited(false);
       }
       setLoading(true);
-      const response = (await ky
-        .get(`https://api.mangadex.org/manga/${currentManga.mangadexId}/feed`, {
-          searchParams: {
+      const { data: feedData } = await fetch<any>(
+        `https://api.mangadex.org/manga/${currentManga.mangadexId}/feed`,
+        {
+          method: 'GET',
+          query: {
             'translatedLanguage[]': 'en',
             'order[chapter]': 'desc',
           },
-        })
-        .json()) as any;
+        },
+      );
 
       setLoading(false);
       setChapters(
-        response.data.map((row: any) => ({
+        feedData.data.map((row: any) => ({
           key: row.id,
           chapter: row.attributes.chapter,
           title: row.attributes.title,

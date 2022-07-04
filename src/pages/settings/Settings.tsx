@@ -1,4 +1,4 @@
-import ky from 'ky';
+import { fetch, Body } from '@tauri-apps/api/http';
 import { useContext, useState } from 'react';
 import { Typography, Form, Input, Button, Space, Modal, message } from 'antd';
 import { GithubFilled, HeartFilled } from '@ant-design/icons';
@@ -47,17 +47,16 @@ const Settings = () => {
 
   const mdOnFinish = async (input: any) => {
     try {
-      const res = (await ky
-        .post('https://api.mangadex.org/auth/login', {
-          json: {
-            username: input.username,
-            password: input.password,
-          },
-        })
-        .json()) as any;
+      const { data } = await fetch<any>('https://api.mangadex.org/auth/login', {
+        method: 'POST',
+        body: Body.json({
+          username: input.username,
+          password: input.password,
+        }),
+      });
       setUser((prevState) => ({
         ...prevState,
-        mangadexToken: res.token.session,
+        mangadexToken: data.token.session,
       }));
       message.success('Login successful!');
     } catch (error) {

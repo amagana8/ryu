@@ -1,4 +1,4 @@
-import ky from 'ky';
+import { fetch } from '@tauri-apps/api/http';
 import { useState, useEffect, useContext } from 'react';
 import { Table, message } from 'antd';
 import { LoadingSpinner } from '@components/loadingSpinner/LoadingSpinner';
@@ -13,26 +13,30 @@ const Updates = () => {
     const getData = async () => {
       setLoading(true);
       try {
-        const feed = await ky.get(
+        const { data: feed } = await fetch<any>(
           'https://api.mangadex.org/user/follows/manga/feed',
           {
+            method: 'GET',
             headers: {
               Authorization: user.mangadexToken,
             },
-            searchParams: {
+            query: {
               'translatedLanguage[]': 'en',
               'order[updatedAt]': 'desc',
             },
           },
-        ).json() as any;
+        );
         const feedData = feed.data.map((row: any, index: number) => ({
           key: index,
           manga: row.relationships.find((rel: any) => rel.type === 'manga').id,
           chapter: row.attributes.chapter,
         }));
         for (const chapter of feedData) {
-          const response = await ky.get(`https://api.mangadex.org/manga/${chapter.manga}`).json() as any;
-          chapter.manga = response.data.attributes.title.en;
+          const { data: chapterData } = await fetch<any>(
+            `https://api.mangadex.org/manga/${chapter.manga}`,
+            { method: 'GET' },
+          );
+          chapter.manga = chapterData.data.attributes.title.en;
         }
         setUpdates(feedData);
       } catch (error) {

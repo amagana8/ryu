@@ -1,4 +1,4 @@
-import ky from 'ky';
+import { fetch, ResponseType } from '@tauri-apps/api/http';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import { List, message } from 'antd';
@@ -26,21 +26,25 @@ const Reader = () => {
         });
       }
       let images = [];
-      const response = (await ky
-        .get(
-          `https://api.mangadex.org/at-home/server/${currentChapter.chapterId}`,
-        )
-        .json()) as any;
-      const baseUrl = response.baseUrl;
-      const { hash, data } = response.chapter;
+      const { data: chapterData } = await fetch<any>(
+        `https://api.mangadex.org/at-home/server/${currentChapter.chapterId}`,
+        { method: 'GET' },
+      );
+      const baseUrl = chapterData.baseUrl;
+      const { hash, data } = chapterData.chapter;
       for (const page of data) {
         try {
-          const res = await ky.get(`${baseUrl}/data/${hash}/${page}`) as any;
+          const res = await fetch<any>(`${baseUrl}/data/${hash}/${page}`, {
+            method: 'GET',
+            responseType: ResponseType.Binary,
+          });
           images.push(res);
           setLoading(false);
-          setPages(images.map((image: any) => ({
-            url: image.url
-          })));
+          setPages(
+            images.map((image: any) => ({
+              url: image.url,
+            })),
+          );
         } catch (error) {
           message.error('Chapter not available.');
           setLoading(false);
