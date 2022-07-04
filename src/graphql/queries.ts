@@ -63,3 +63,11 @@ export const GetHistory = gql`
     }
   }
 `;
+
+export const GetMediaList = gql`
+  query ($userId: Int, $mediaId: Int) {
+    MediaList(userId: $userId, mediaId: $mediaId) {
+      id
+    }
+  }
+`;

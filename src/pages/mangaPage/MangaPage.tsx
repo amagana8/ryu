@@ -41,8 +41,6 @@ const MangaPage = () => {
         response.data.map((row: any) => ({
           key: row.id,
           chapter: row.attributes.chapter,
-          hash: row.attributes.hash,
-          data: row.attributes.data,
           title: row.attributes.title,
           chapterId: row.id,
           groupId: row.relationships[0].id,
@@ -56,9 +54,8 @@ const MangaPage = () => {
     navigate('/reader', {
       state: {
         chapterId: record.chapterId,
-        chapterHash: record.hash,
-        chapterData: record.data,
         chapterNum: record.chapter,
+        mangaId: currentManga.mangadexId,
       },
     });
   }

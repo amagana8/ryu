@@ -13,6 +13,9 @@ import { Search } from '@pages/search/Search';
 import { MangaPage } from '@pages/mangaPage/MangaPage';
 import { History } from '@pages/history/History';
 import { conenct } from '@services/db';
+import { Downloads } from '@pages/downloads/Downloads';
+import { Updates } from '@pages/updates/Updates';
+import { Reader } from '@pages/reader/Reader';
 
 const { Sider, Content } = Layout;
 
@@ -79,7 +82,10 @@ function App() {
                 <Route path="/mangaList" element={<MangaList />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="/mangaPage" element={<MangaPage />} />
+                <Route path="/reader" element={<Reader />} />
                 <Route path="/history" element={<History />} />
+                <Route path="/updates" element={<Updates />} />
+                <Route path="/downloads" element={<Downloads />} />
                 <Route path="/settings" element={<Settings />} />
               </Routes>
             </Content>
