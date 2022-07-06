@@ -3,7 +3,8 @@ import { createContext, Dispatch, SetStateAction } from 'react';
 export interface User {
   anilistId: string;
   anilistToken: string;
-  mangadexToken: string;
+  mdSessionToken: string;
+  mdRefreshToken: string;
 }
 
 interface UserContextType {
@@ -14,7 +15,8 @@ interface UserContextType {
 export const defaultUser = {
   anilistId: '',
   anilistToken: '',
-  mangadexToken: '',
+  mdSessionToken: '',
+  mdRefreshToken: '',
 };
 
 export const UserContext = createContext<UserContextType>({

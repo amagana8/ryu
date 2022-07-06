@@ -16,6 +16,7 @@ import { conenct } from '@services/db';
 import { Downloads } from '@pages/downloads/Downloads';
 import { Updates } from '@pages/updates/Updates';
 import { Reader } from '@pages/reader/Reader';
+import { fetch, Body } from '@tauri-apps/api/http';
 
 const { Sider, Content } = Layout;
 
@@ -33,8 +34,29 @@ function App() {
       await loadStore();
       await conenct();
     };
+    const refreshMdToken = async () => {
+      try {
+        const { data } = await fetch<any>(
+          'https://api.mangadex.org/auth/refresh',
+          {
+            method: 'POST',
+            body: Body.json({
+              token: user.mdRefreshToken,
+            }),
+          },
+        );
+        setUser((prevState) => ({
+          ...prevState,
+          mdSessionToken: data.token.session,
+          mdRefreshToken: data.token.refresh,
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    };
     loadStorage();
     getUser();
+    refreshMdToken();
   }, []);
 
   // keep store in sync with context

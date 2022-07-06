@@ -18,7 +18,7 @@ const Updates = () => {
           {
             method: 'GET',
             headers: {
-              Authorization: user.mangadexToken,
+              Authorization: user.mdSessionToken,
             },
             query: {
               'translatedLanguage[]': 'en',

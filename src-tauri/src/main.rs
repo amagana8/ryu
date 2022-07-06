@@ -12,7 +12,8 @@ fn main() {
     let user = StoreBuilder::new(".user".parse().unwrap())
         .default("anilistId".to_string(), "".into())
         .default("anilistToken".to_string(), "".into())
-        .default("mangadexToken".to_string(), "".into())
+        .default("mdSessionToken".to_string(), "".into())
+        .default("mdRefreshToken".to_string(), "".into())
         .build();
 
     tauri::Builder::default()
