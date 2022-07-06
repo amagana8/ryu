@@ -7,7 +7,6 @@ import { AniListModal } from '@components/anilistModal/AniListModal';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { LoadingSpinner } from '@components/loadingSpinner/LoadingSpinner';
 import { Manga } from '@models/Manga';
-import styles from './MangaPage.module.scss';
 
 const { Title } = Typography;
 
@@ -94,7 +93,6 @@ const MangaPage = () => {
         <LoadingSpinner />
       ) : (
         <List
-          className={styles.list}
           dataSource={chapters}
           renderItem={(chapter: any) => (
             <List.Item>

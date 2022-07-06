@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { Input } from 'antd';
 import { MangaGrid } from '@components/mangaGrid/MangaGrid';
 import { LoadingSpinner } from '@components/loadingSpinner/LoadingSpinner';
-import styles from './Search.module.scss';
 
 const Search = () => {
   const [manga, setManga] = useState([]);
@@ -37,11 +36,7 @@ const Search = () => {
 
   return (
     <>
-      <Input.Search
-        placeholder="search MangaDex"
-        onSearch={getData}
-        className={styles.searchBox}
-      />
+      <Input.Search placeholder="search MangaDex" onSearch={getData} />
       {loading ? <LoadingSpinner /> : <MangaGrid mangas={manga} />}
     </>
   );

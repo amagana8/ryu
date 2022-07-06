@@ -1,6 +1,6 @@
 export interface Manga {
   mangadexId: string;
-  anilistId?: string | null;
+  anilistId?: string;
   coverId: string;
   title: string;
 }

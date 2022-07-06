@@ -16,7 +16,10 @@
       "http": {
         "all": false,
         "request": false,
-        "scope": ["https://api.mangadex.org/*", "https://uploads.mangadex.org/*"]
+        "scope": [
+          "https://api.mangadex.org/*",
+          "https://uploads.mangadex.org/*"
+        ]
       }
     },
     "bundle": {

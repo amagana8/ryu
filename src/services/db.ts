@@ -25,7 +25,7 @@ export async function add(manga: Manga): Promise<QueryResult> {
 
 export async function update(manga: Manga): Promise<QueryResult> {
   return await db.execute(
-    'UPDATE LIBRARY SET mangadexId = $1, coverId = $2, title = $3, anilistId = $4',
+    'UPDATE library SET mangadexId = $1, coverId = $2, title = $3, anilistId = $4 WHERE mangadexId = $1',
     [manga.mangadexId, manga.coverId, manga.title, manga.anilistId],
   );
 }

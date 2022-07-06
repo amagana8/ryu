@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Input, List, Modal, Button, Image } from 'antd';
 import { useLazyQuery } from '@apollo/client';
-import { CheckOutlined } from '@ant-design/icons';
 import { GetSearch } from '@graphql/queries';
 import { LoadingSpinner } from '@components/loadingSpinner/LoadingSpinner';
 import styles from './AniListModal.module.scss';
@@ -48,7 +47,7 @@ const AniListModal = ({ manga }: AniListModalProps) => {
   const deleteLink = async () => {
     await update({
       ...manga,
-      anilistId: null,
+      anilistId: '',
     });
     setLinked(false);
     setIsModalVisible(false);
@@ -56,15 +55,20 @@ const AniListModal = ({ manga }: AniListModalProps) => {
 
   return (
     <>
-      <Button type="primary" onClick={linked ? showModal : deleteLink}>
-        {`${linked ? 'Link to' : 'Unlink from'} AniList`}
+      <Button type="primary" onClick={linked ? deleteLink : showModal}>
+        {`${linked ? 'Unlink from' : 'Link to'} AniList`}
       </Button>
       <Modal
         title="Link to Anilist"
         visible={isModalVisible}
         onCancel={handleCancel}
+        footer={null}
       >
-        <Search placeholder="search AniList" onSearch={onSearch} />
+        <Search
+          placeholder="search AniList"
+          onSearch={onSearch}
+          defaultValue={manga.title}
+        />
         {loading ? (
           <LoadingSpinner />
         ) : (

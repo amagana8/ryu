@@ -1,32 +1,34 @@
 import { fetch, ResponseType } from '@tauri-apps/api/http';
 import { useLazyQuery, useMutation } from '@apollo/client';
-import { useState, useEffect } from 'react';
-import { List, message, Image } from 'antd';
+import { useState, useEffect, useContext } from 'react';
+import { message, Image } from 'antd';
 import { get } from '@services/db';
 import { LoadingSpinner } from '@components/loadingSpinner/LoadingSpinner';
 import { UpdateProgress } from '@graphql/mutations';
 import { GetMediaList } from '@graphql/queries';
 import { useLocation } from 'react-router-dom';
 import styles from './Reader.module.scss';
+import { UserContext } from '@contexts/UserContext';
 
 const Reader = () => {
-  const [pages, setPages] = useState<any>([]);
+  const [pages, setPages] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const currentChapter = useLocation().state as any;
+  const { user } = useContext(UserContext);
+  const [updateProgress] = useMutation(UpdateProgress);
 
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
-      const manga = (await get(currentChapter.mangadexId)) as any;
-      if (manga.length) {
+      const manga = (await get(currentChapter.mangaId)) as any;
+      if (manga?.[0]?.anilistId) {
         getMediaList({
           variables: {
-            userId: localStorage.getItem('UserId'),
-            mediaId: manga.anilistId,
+            userId: user.anilistId,
+            mediaId: manga[0].anilistId,
           },
         });
       }
-      let images = [];
       const { data: chapterData } = await fetch<any>(
         `https://api.mangadex.org/at-home/server/${currentChapter.chapterId}`,
         { method: 'GET' },
@@ -39,13 +41,8 @@ const Reader = () => {
             method: 'GET',
             responseType: ResponseType.Binary,
           });
-          images.push(res);
           setLoading(false);
-          setPages(
-            images.map((image: any) => ({
-              url: image.url,
-            })),
-          );
+          setPages((prevState) => [...prevState, res.url]);
         } catch (error) {
           message.error('Chapter not available.');
           setLoading(false);
@@ -68,30 +65,23 @@ const Reader = () => {
     },
   });
 
-  const [updateProgress] = useMutation(UpdateProgress);
-
   return (
     <>
       {loading ? (
         <LoadingSpinner />
       ) : (
-        <List
-          itemLayout="vertical"
-          size="large"
-          dataSource={pages}
-          renderItem={(page: any, index: number) => (
-            <List.Item>
-              <div className={styles.page}>
-                <Image
-                  src={page.url ?? 'error'}
-                  alt={`Page ${index + 1}`}
-                  preview={false}
-                  fallback="https://i.imgur.com/fac0ifd.png"
-                />
-              </div>
-            </List.Item>
-          )}
-        ></List>
+        <ul>
+          {pages.map((page: string, index: number) => (
+            <li className={styles.page} key={index}>
+              <Image
+                src={page ?? 'error'}
+                alt={`Page ${index + 1}`}
+                preview={false}
+                fallback="https://i.imgur.com/fac0ifd.png"
+              />
+            </li>
+          ))}
+        </ul>
       )}
     </>
   );

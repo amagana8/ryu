@@ -7,7 +7,7 @@ import { LoadingSpinner } from '@components/loadingSpinner/LoadingSpinner';
 
 const History = () => {
   const { user } = useContext(UserContext);
-  
+
   const { loading, data } = useQuery(GetHistory, {
     variables: {
       userId: user.anilistId,

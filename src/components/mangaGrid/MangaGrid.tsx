@@ -42,6 +42,7 @@ const MangaGrid = ({ mangas }: MangaGridProps) => {
         mangadexId: record.mangadexId,
         coverId: record.coverId,
         title: record.title,
+        anilistId: record.anilistId,
       },
     });
   }
@@ -64,25 +65,25 @@ const MangaGrid = ({ mangas }: MangaGridProps) => {
           className={styles.list}
           dataSource={list}
           renderItem={(item) => (
-              <List.Item onClick={() => handleClick(item)}>
-                <Card
-                  loading={loading}
-                  hoverable
-                  style={{ width: 240 }}
-                  cover={
-                    <Image
-                      height={360}
-                      width={240}
-                      preview={false}
-                      src={item.cover ?? 'error'}
-                      alt={`${item.title} Cover`}
-                      fallback="https://i.imgur.com/fac0ifd.png"
-                    />
-                  }
-                >
-                  <Meta description={item.title} />
-                </Card>
-              </List.Item>
+            <List.Item onClick={() => handleClick(item)}>
+              <Card
+                loading={loading}
+                hoverable
+                style={{ width: 240 }}
+                cover={
+                  <Image
+                    height={360}
+                    width={240}
+                    preview={false}
+                    src={item.cover ?? 'error'}
+                    alt={`${item.title} Cover`}
+                    fallback="https://i.imgur.com/fac0ifd.png"
+                  />
+                }
+              >
+                <Meta description={item.title} />
+              </Card>
+            </List.Item>
           )}
         />
       )}
