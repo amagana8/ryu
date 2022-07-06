@@ -35,6 +35,8 @@ function App() {
       await conenct();
     };
     const refreshMdToken = async () => {
+      if (!user.mdRefreshToken) return;
+
       try {
         const { data } = await fetch<any>(
           'https://api.mangadex.org/auth/refresh',
