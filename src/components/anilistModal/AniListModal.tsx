@@ -56,24 +56,13 @@ const AniListModal = ({ manga }: AniListModalProps) => {
 
   return (
     <>
-      {linked ? (
-        <Button type="primary" icon={<CheckOutlined />} onClick={showModal}>
-          Link to AniList
-        </Button>
-      ) : (
-        <Button type="primary" onClick={showModal}>
-          Link to AniList
-        </Button>
-      )}
+      <Button type="primary" onClick={linked ? showModal : deleteLink}>
+        {`${linked ? 'Link to' : 'Unlink from'} AniList`}
+      </Button>
       <Modal
         title="Link to Anilist"
         visible={isModalVisible}
         onCancel={handleCancel}
-        footer={
-          <Button type="primary" onClick={() => deleteLink()} danger>
-            Unlink
-          </Button>
-        }
       >
         <Search placeholder="search AniList" onSearch={onSearch} />
         {loading ? (

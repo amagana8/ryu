@@ -1,6 +1,6 @@
 import { fetch } from '@tauri-apps/api/http';
 import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Button, List, Typography, Space, Divider } from 'antd';
 import { get, add, remove } from '@services/db';
 import { AniListModal } from '@components/anilistModal/AniListModal';
@@ -21,7 +21,6 @@ const MangaPage = () => {
   const [favorited, setFavorited] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
   const currentManga = useLocation().state as Manga;
 
   useEffect(() => {
@@ -84,19 +83,11 @@ const MangaPage = () => {
     <>
       <Space split={<Divider type="vertical" />}>
         <Title>{currentManga.title}</Title>
-        {favorited ? (
-          <Button
-            type="text"
-            icon={<HeartFilled />}
-            onClick={() => removeFromLibrary()}
-          />
-        ) : (
-          <Button
-            type="text"
-            icon={<HeartOutlined />}
-            onClick={() => addtoLibrary()}
-          />
-        )}
+        <Button
+          type="text"
+          icon={favorited ? <HeartFilled /> : <HeartOutlined />}
+          onClick={favorited ? removeFromLibrary : addtoLibrary}
+        />
         <AniListModal manga={currentManga} />
       </Space>
       {loading ? (
